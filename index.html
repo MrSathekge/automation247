@@ -105,18 +105,20 @@ a{color:inherit}
     flex-direction:column;align-items:stretch;gap:0;padding:6px 20px;
     background:var(--it-bg);border-bottom:1px solid var(--it-line);
     box-shadow:0 22px 30px -24px rgba(11,13,16,.55)}
-  .nav.open{display:flex;animation:nav-in .18s ease-out}
+  .nav.open{display:flex;animation:nav-unroll .26s ease-out}
   /* closing: the links fade and lift one by one, bottom to top (--d is set
      by the script: 0 for the bottom link), then the panel itself fades */
-  .nav.closing{display:flex;pointer-events:none;animation:nav-out .18s ease forwards;animation-delay:var(--last,0ms)}
+  .nav.closing{display:flex;pointer-events:none;animation:nav-retract var(--last,460ms) cubic-bezier(.45,0,.55,1) 60ms forwards}
   .nav.closing a{animation:nav-item-out .24s ease forwards;animation-delay:calc(var(--d,0) * 85ms)}
   .nav a{padding:13px 4px;font-size:16.5px;border-bottom:1px solid var(--it-line)}
   .nav a:last-child{border-bottom:0}
   .brand-name{font-size:20px}
 }
-@keyframes nav-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 @keyframes nav-item-out{to{opacity:0;transform:translateY(-8px)}}
-@keyframes nav-out{to{opacity:0}}
+/* the sheet rolls up from its bottom edge (and down when it opens); the
+   negative sides keep its shadow visible while it moves */
+@keyframes nav-unroll{from{clip-path:inset(0 -40px 100% -40px)}to{clip-path:inset(0 -40px -40px -40px)}}
+@keyframes nav-retract{from{clip-path:inset(0 -40px -40px -40px)}to{clip-path:inset(0 -40px 100% -40px)}}
 
 .themebtn{flex:none;width:44px;height:44px;border-radius:50%;cursor:pointer;background:transparent;border:2px solid var(--it-line);color:var(--it-text);display:grid;place-items:center;transition:border-color .16s ease,color .16s ease}
 .themebtn:hover{border-color:var(--it-accent);color:var(--it-accent)}
@@ -1211,7 +1213,7 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
       var last = (links.length - 1) * 85 + 200;
       nav.style.setProperty('--last', last + 'ms');
       nav.classList.add('closing');
-      closeTimer = setTimeout(function(){ nav.classList.remove('closing'); }, last + 200);
+      closeTimer = setTimeout(function(){ nav.classList.remove('closing'); }, last + 90);
     } else {
       nav.classList.remove('closing');
     }
