@@ -396,6 +396,8 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
 @media (max-width:620px){.it-fields{grid-template-columns:1fr}}
 .it-field{display:flex;flex-direction:column;gap:7px}
 .it-field.full{grid-column:1/-1}
+/* a label that wraps must not push its box below the one beside it */
+.it-fields > .it-field{justify-content:flex-end}
 .it-field label{font-family:var(--it-mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--it-faint)}
 .it-field label em{font-style:normal;text-transform:none;letter-spacing:.4px;color:var(--it-accent)}
 .it-field input,.it-field select{font-family:var(--it-sans);font-size:15.5px;color:var(--it-text);
@@ -1020,7 +1022,7 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
         <div class="it-field"><label for="wname">Your name</label><input id="wname" name="name" type="text" autocomplete="name" required></div>
         <div class="it-field"><label for="wbiz">Business name</label><input id="wbiz" name="business" type="text" autocomplete="organization"></div>
         <div class="it-field"><label for="wemail">Email <em>(so we can reply)</em></label><input id="wemail" name="email" type="email" autocomplete="email" required></div>
-        <div class="it-field"><label for="wphone">WhatsApp <em>(optional)</em></label><input id="wphone" name="phone" type="tel" autocomplete="tel" placeholder="082 000 0000"></div>
+        <div class="it-field"><label for="wphone">Phone / WhatsApp <em>(optional)</em></label><input id="wphone" name="phone" type="tel" autocomplete="tel" placeholder="082 000 0000"></div>
         <div class="it-field full"><label for="wpack">What are you after?</label>
           <select id="wpack" name="package">
             <option value="starter">Starter &mdash; R6 500</option>
@@ -1311,7 +1313,7 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
     if(val('wname'))  out.push('Name: ' + val('wname'));
     if(val('wbiz'))   out.push('Business: ' + val('wbiz'));
     if(val('wemail')) out.push('Email: ' + val('wemail'));
-    if(val('wphone')) out.push('WhatsApp: ' + val('wphone'));
+    if(val('wphone')) out.push('Phone: ' + val('wphone'));
     if(picked('wpack')) out.push('After: ' + picked('wpack'));
     if(val('wmsg'))   out.push('', val('wmsg'), '');
     if(val('wref'))   out.push('Referred by: ' + val('wref'));
@@ -1363,7 +1365,7 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
       name: name,
       business: val('wbiz'),
       email: email,
-      whatsapp: val('wphone'),
+      phone: val('wphone'),
       after: picked('wpack'),
       message: val('wmsg'),
       referred_by: ref,
