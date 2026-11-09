@@ -144,6 +144,8 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
 #services .it-section{padding-block:clamp(30px,4vw,52px)}
 /* the referral strip sits between two sections; their padding is the gap */
 #services #it-refsec{padding-block:0}
+/* a link that jumps to a section stops below the sticky header, not under it */
+#services [id]{scroll-margin-top:calc(env(safe-area-inset-top,0px) + 84px)}
 #services h1,#services h2,#services h3,#services h4{font-family:var(--it-sans);color:var(--it-text);margin:0}
 #services h1{font-size:clamp(34px,5.4vw,50px);line-height:1.06;letter-spacing:-1.4px;font-weight:600}
 #services h2{font-size:clamp(25px,3.4vw,34px);line-height:1.14;letter-spacing:-.8px;font-weight:600;margin:10px 0 0}
