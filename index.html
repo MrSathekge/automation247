@@ -120,20 +120,8 @@ input,select{font-family:inherit;font-size:16px;color:var(--it-text);background:
   border:2px solid var(--it-line);border-radius:var(--r-sm);padding:12px 14px;width:100%}
 input:focus,select:focus{border-color:var(--it-accent);outline:none}
 
-/* ---------- footer ---------- */
-.ftr{background:var(--it-panel);color:var(--it-dim);padding-block:52px 34px;margin-top:10px}
-.ftr a{color:var(--it-accent)}
-.ftr-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:34px}
-@media (max-width:760px){.ftr-grid{grid-template-columns:1fr;gap:26px}}
-.ftr .brand-name{color:var(--it-text)}
-.ftr .brand-r{color:var(--it-accent)}
-.ftr h4{font-family:var(--it-sans);font-weight:600;font-size:17px;color:var(--it-text);margin-bottom:11px}
-.ftr p,.ftr li{font-size:15px}
-.ftr ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 /* a value still to be supplied - visible on purpose so it is never forgotten */
 .ph{display:inline-block;max-width:100%;overflow-wrap:anywhere;background:var(--it-accent-soft);border:1px dashed var(--it-accent);border-radius:6px;padding:1px 7px;font-weight:700;color:var(--it-accent)}
-.ftr-btm{margin-top:34px;padding-top:20px;border-top:1px solid var(--it-line);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:13.5px;color:var(--it-faint)}
-.story{background:var(--it-bg);border-radius:var(--r-md);padding:18px;margin-top:16px;font-size:14.8px;color:var(--it-dim)}
 /* ================= Automation247 — Dark Technical ================= */
 /* Its own token set, so the site's light/dark toggle drives it too. */
 #services{
@@ -141,7 +129,7 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   --it-line:#DFE3EA; --it-line-soft:#E9ECF1;
   --it-text:#0B0D10; --it-dim:#4A5566; --it-faint:#5F6B7D;
   --it-accent:#1A6E88; --it-accent-ink:#FFFFFF; --it-accent-soft:#E6F3F7;
-  --it-ok:#1F7A4D; --it-warn:#8A5A00;
+  --it-ok:#1F7A4D; --it-warn:#8A5A00; --it-bad:#B42318;
   --it-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
   --it-sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
   background:var(--it-bg); color:var(--it-text); font-family:var(--it-sans);
@@ -151,10 +139,12 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   --it-line:#1E242C; --it-line-soft:#191E25;
   --it-text:#E9ECF1; --it-dim:#9AA4B4; --it-faint:#6C7686;
   --it-accent:#35B6D6; --it-accent-ink:#04222B; --it-accent-soft:#102830;
-  --it-ok:#7FD4A0; --it-warn:#F0B24B;
+  --it-ok:#7FD4A0; --it-warn:#F0B24B; --it-bad:#F97066;
 }
 
-#services .it-section{padding-block:clamp(44px,6vw,76px)}
+#services .it-section{padding-block:clamp(30px,4vw,52px)}
+/* the referral strip sits between two sections; their padding is the gap */
+#services #it-refsec{padding-block:0}
 #services h1,#services h2,#services h3,#services h4{font-family:var(--it-sans);color:var(--it-text);margin:0}
 #services h1{font-size:clamp(34px,5.4vw,50px);line-height:1.06;letter-spacing:-1.4px;font-weight:600}
 #services h2{font-size:clamp(25px,3.4vw,34px);line-height:1.14;letter-spacing:-.8px;font-weight:600;margin:10px 0 0}
@@ -397,7 +387,7 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
 .it-ref-amt{flex:none;font-family:var(--it-mono);font-size:30px;font-weight:600;letter-spacing:-1px;
   color:var(--it-accent-ink);background:var(--it-accent);border-radius:8px;padding:18px 20px}
 .it-referral h3{font-size:clamp(21px,2.6vw,26px);font-weight:600;letter-spacing:-.5px;margin-bottom:8px}
-.it-referral p{font-size:15.5px;max-width:58ch;color:var(--it-dim)}
+.it-referral p{font-size:15.5px;color:var(--it-dim)}
 .it-referral strong{color:var(--it-text);font-weight:600}
 
 /* form */
@@ -413,6 +403,17 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   min-height:48px}
 .it-field input:focus,.it-field select:focus{outline:none;border-color:var(--it-accent);
   box-shadow:inset 0 0 0 1px var(--it-accent)}
+.it-field textarea{font-family:var(--it-sans);font-size:15.5px;color:var(--it-text);line-height:1.55;
+  background:var(--it-panel);border:1px solid var(--it-line);border-radius:6px;padding:13px 14px;width:100%;
+  min-height:124px;resize:vertical}
+.it-field textarea:focus{outline:none;border-color:var(--it-accent);box-shadow:inset 0 0 0 1px var(--it-accent)}
+.it-field.is-bad input,.it-field.is-bad textarea{border-color:var(--it-bad);box-shadow:inset 0 0 0 1px var(--it-bad)}
+.it-field.is-bad label{color:var(--it-bad)}
+.it-trap{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+#services .it-form-err{margin-top:16px;color:var(--it-bad);font-size:14.5px;font-weight:500}
+#services .it-form-err a{color:inherit;font-weight:600}
+#services .it-form-note{margin-top:12px;font-size:13px;color:var(--it-faint)}
+.it-form-foot button[disabled]{opacity:.6;cursor:progress}
 .it-form-foot{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:22px}
 .it-form-foot span{font-size:14.5px;color:var(--it-dim)}
 .it-done{display:flex;gap:16px;align-items:flex-start;margin-top:26px;color:var(--it-accent);
@@ -485,19 +486,6 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   [data-view="services"] .nav a{border-bottom-color:var(--it-line)}
 }
 
-[data-view="services"] .ftr{background:var(--it-panel);color:var(--it-dim);
-  border-top:1px solid var(--it-line)}
-[data-view="services"] .ftr a{color:var(--it-accent)}
-[data-view="services"] .ftr h4{font-family:var(--it-sans);color:var(--it-text);
-  font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase}
-[data-view="services"] .ftr .brand-name{color:var(--it-text)}
-[data-view="services"] .ftr .brand-r{color:var(--it-accent)}
-[data-view="services"] .ftr p,[data-view="services"] .ftr li{font-family:var(--it-sans)}
-[data-view="services"] .story{background:var(--it-bg);border:1px solid var(--it-line);color:var(--it-dim)}
-[data-view="services"] .story strong{color:var(--it-text)}
-[data-view="services"] .ftr-btm{border-top-color:var(--it-line);color:var(--it-faint)}
-[data-view="services"] .ftr .ph{background:var(--it-accent-soft,#E6F3F7);
-  border:1px dashed var(--it-accent);color:var(--it-accent)}
 [data-view="services"] .totop{background:var(--it-accent);color:var(--it-accent-ink)}
 
 /* ---------- pricing picker: the real input sits under the card ---------- */
@@ -515,6 +503,44 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
 .totop:active{transform:translateY(0)}
 @media (max-width:520px){.totop{width:46px;height:46px;right:14px;
   bottom:calc(14px + env(safe-area-inset-bottom,0px))}}
+/* ---- footer ----
+   Four short columns. Every heading row is the same height, so the first
+   line of each column starts level; the company line sits centred below. */
+.foot{background:var(--it-panel);color:var(--it-dim);border-top:1px solid var(--it-line);
+  padding-block:34px 20px;margin-top:10px;font-family:var(--it-sans)}
+.foot-grid{display:grid;grid-template-columns:1.15fr 1.3fr 1.25fr .95fr;gap:26px 32px;align-items:start}
+.foot-head{display:flex;align-items:center;gap:8px;height:24px;margin:0 0 10px;
+  font-family:var(--it-sans);font-size:11.5px;font-weight:600;letter-spacing:1.4px;
+  text-transform:uppercase;color:var(--it-text)}
+.foot-brand{font-size:17px;letter-spacing:-.3px;text-transform:none}
+.foot-brand svg{flex:none}
+.foot-brand b{font-weight:600;color:var(--it-accent)}
+.foot p,.foot li{font-size:13.5px;line-height:1.55;margin:0}
+.foot p + p{margin-top:8px}
+.foot-note{color:var(--it-faint)}
+.foot-note strong{color:var(--it-text);font-weight:600}
+.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.foot li b{color:var(--it-text);font-weight:600}
+.foot a{color:var(--it-accent);overflow-wrap:anywhere}
+.foot-btm{margin-top:26px;padding-top:14px;border-top:1px solid var(--it-line);
+  text-align:center;font-size:12.5px;color:var(--it-faint)}
+.foot-btm span{white-space:nowrap}
+@media (max-width:980px){
+  .foot-grid{grid-template-columns:1fr 1fr;gap:24px 32px}
+}
+@media (max-width:620px){
+  .foot{padding-block:24px 16px}
+  .foot-grid{gap:18px 16px}
+  .foot-about{grid-column:1 / -1}
+  .foot-head{height:20px;margin-bottom:7px;font-size:var(--it-ph3,11px);letter-spacing:1.3px}
+  .foot-brand{font-size:var(--it-ph2,14px);letter-spacing:-.2px}
+  .foot p,.foot li{font-size:var(--it-ph3,11px);line-height:1.5}
+  .foot ul{gap:5px}
+  /* the back-to-top button floats over the bottom corners */
+  .foot-btm{margin-top:18px;padding:12px 56px 0;font-size:var(--it-ph3,11px)}
+}
+@media (max-width:360px){.foot-grid{grid-template-columns:1fr}}
+
 /* ================= phone tier =================
    Last in the sheet on purpose: several base rules are declared after the
    component blocks, so an override placed earlier silently loses. */
@@ -545,22 +571,6 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   .hdr-in .btn-sm{padding:8px 10px;font-size:12.5px}
 }
 
-/* Automation247 footer on a phone: two columns, smaller type, less air */
-@media (max-width:620px){
-  [data-view="services"] .ftr{padding-block:26px 18px}
-  [data-view="services"] .ftr-grid{grid-template-columns:1fr 1fr;gap:18px 16px}
-  [data-view="services"] .ftr-grid > div:first-child{grid-column:1 / -1}
-  [data-view="services"] .ftr .brand{margin-bottom:8px}
-  [data-view="services"] .ftr .brand svg{width:26px;height:26px}
-  [data-view="services"] .ftr h4{letter-spacing:1.3px;margin-bottom:7px}
-  [data-view="services"] .ftr p,
-  [data-view="services"] .ftr li{line-height:1.5}
-  [data-view="services"] .ftr ul{gap:6px}
-  [data-view="services"] .ftr .ph{padding:0 5px;}
-  [data-view="services"] .story{padding:12px 13px;margin-top:10px;line-height:1.5}
-  [data-view="services"] .ftr-btm{margin-top:18px;padding-top:13px;gap:6px}
-}
-
 /* Automation247 enquiry form on a phone: short fields pair up, less air around them.
    Inputs stay at 16px — anything smaller and iOS zooms the page on focus. */
 @media (max-width:620px){
@@ -572,13 +582,14 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   [data-view="services"] .it-field label{letter-spacing:1px}
   [data-view="services"] .it-field input,
   [data-view="services"] .it-field select{font-size:16px;padding:10px 11px;min-height:44px}
+  [data-view="services"] .it-field textarea{font-size:16px;padding:10px 11px;min-height:110px}
   [data-view="services"] .it-form-foot{margin-top:16px;gap:10px 14px}
   [data-view="services"] .it-done{margin-top:18px;padding:16px 16px;gap:12px}
 }
 
 /* Automation247 referral panel on a phone: badge beside the words, not above them */
 @media (max-width:620px){
-  [data-view="services"] #it-refsec{padding-block:18px}
+  [data-view="services"] #services #it-refsec{padding-block:0}
   [data-view="services"] .it-referral{flex-direction:row;align-items:flex-start;
     gap:12px;padding:15px 16px;border-radius:8px}
   [data-view="services"] .it-ref-amt{padding:8px 10px;border-radius:6px}
@@ -638,7 +649,6 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   [data-view="services"] .it-btn,
   [data-view="services"] .it-run,
   [data-view="services"] .hdr .brand-name,
-  [data-view="services"] .ftr .brand-name,
   [data-view="services"] .nav a,
   [data-view="services"] .hdr-in .btn-sm{font-size:var(--it-ph2)}
   [data-view="services"] #services .it-trust-two{font-size:var(--it-ph2)!important}
@@ -666,12 +676,8 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   [data-view="services"] .it-field label,
   [data-view="services"] .it-form-foot span,
   [data-view="services"] .it-auto-go,
-  [data-view="services"] .ftr h4,
-  [data-view="services"] .ftr p,
-  [data-view="services"] .ftr li,
-  [data-view="services"] .ftr .ph,
-  [data-view="services"] .story,
-  [data-view="services"] .ftr-btm{font-size:var(--it-ph3)}
+  [data-view="services"] #services .it-form-err,
+  [data-view="services"] #services .it-form-note{font-size:var(--it-ph3)}
   [data-view="services"] #services .it-opt-note,
   [data-view="services"] #services .it-fine,
   [data-view="services"] #services .ph{font-size:var(--it-ph3)}
@@ -1012,9 +1018,9 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
     <form id="webForm" class="it-form" novalidate>
       <div class="it-fields">
         <div class="it-field"><label for="wname">Your name</label><input id="wname" name="name" type="text" autocomplete="name" required></div>
-        <div class="it-field"><label for="wbiz">Business name</label><input id="wbiz" name="business" type="text" required></div>
-        <div class="it-field"><label for="wphone">WhatsApp number</label><input id="wphone" name="phone" type="tel" autocomplete="tel" placeholder="082 000 0000" required></div>
-        <div class="it-field"><label for="wemail">Email</label><input id="wemail" name="email" type="email" autocomplete="email"></div>
+        <div class="it-field"><label for="wbiz">Business name</label><input id="wbiz" name="business" type="text" autocomplete="organization"></div>
+        <div class="it-field"><label for="wemail">Email <em>(so we can reply)</em></label><input id="wemail" name="email" type="email" autocomplete="email" required></div>
+        <div class="it-field"><label for="wphone">WhatsApp <em>(optional)</em></label><input id="wphone" name="phone" type="tel" autocomplete="tel" placeholder="082 000 0000"></div>
         <div class="it-field full"><label for="wpack">What are you after?</label>
           <select id="wpack" name="package">
             <option value="starter">Starter &mdash; R6 500</option>
@@ -1025,19 +1031,25 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
             <option value="unsure">Not sure yet, please advise</option>
           </select>
         </div>
+        <div class="it-field full"><label for="wmsg">Tell us what you need</label>
+          <textarea id="wmsg" name="message" rows="5" required placeholder="What the business does, what is slowing you down, and anything you already have &mdash; a site, a spreadsheet, a deadline."></textarea>
+        </div>
         <div class="it-field full"><label for="wref">Who sent you? <em>(they get R500)</em></label>
           <input id="wref" name="referrer" type="text" placeholder="Name and number of whoever referred you">
         </div>
+        <div class="it-trap" aria-hidden="true"><label for="wHoney">Leave this empty</label><input type="text" name="_honey" id="wHoney" tabindex="-1" autocomplete="off"></div>
       </div>
+      <p class="it-form-err" id="wErr" role="alert" hidden></p>
       <div class="it-form-foot">
-        <button class="it-btn it-btn-solid" type="submit">Send it through</button>
+        <button class="it-btn it-btn-solid" type="submit" id="wSend">Send it through</button>
         <span>or WhatsApp <a href="https://wa.me/27658750803" target="_blank" rel="noopener">065&nbsp;875&nbsp;0803</a>, or email <a href="mailto:info@automation247.co.za">info@automation247.co.za</a></span>
       </div>
+      <p class="it-form-note">We use these details only to reply to your enquiry.</p>
     </form>
 
     <div class="it-done" id="webDone" hidden>
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-      <div><h3>Got it &mdash; thank you</h3><p id="wDoneMsg">We will come back to you on WhatsApp today.</p></div>
+      <div><h3>Got it &mdash; thank you</h3><p id="wDoneMsg">It is in our inbox. We will reply today.</p></div>
     </div>
   </section>
 
@@ -1058,25 +1070,24 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
 
 </main>
 
-<footer class="ftr">
+<footer class="foot">
   <div class="wrap">
-    <div class="ftr-grid">
-      <div>
-        <div class="brand" style="margin-bottom:12px">
-          <svg viewBox="0 0 100 100" width="23" height="23" aria-hidden="true">
-            <circle cx="50" cy="50" r="44" fill="none" stroke="#35B6D6" stroke-width="7"
-              stroke-linecap="round"/>
-            <circle cx="50" cy="50" r="9" fill="#35B6D6"/>
+    <div class="foot-grid">
+      <div class="foot-about">
+        <div class="foot-head foot-brand">
+          <svg viewBox="0 0 100 100" width="20" height="20" aria-hidden="true">
+            <circle cx="50" cy="50" r="44" fill="none" stroke="var(--it-accent)" stroke-width="8" stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="10" fill="var(--it-accent)"/>
           </svg>
-          <span class="brand-name">Automation<span class="brand-r">247</span></span>
+          <span>Automation<b>247</b></span>
         </div>
         <p>We build the systems behind the business. Sites that take bookings, internal tools that replace a
         spreadsheet, and AI workers that sign in overnight so nobody has to.</p>
-        <div class="story"><strong>Where the name came from.</strong> The work runs while
-        you are asleep. That is the whole idea.</div>
+        <p class="foot-note"><strong>Where the name came from.</strong> The work runs while you are asleep.
+        That is the whole idea.</p>
       </div>
       <div>
-        <h4>Get in touch</h4>
+        <h4 class="foot-head">Get in touch</h4>
         <ul>
           <li>WhatsApp <a href="https://wa.me/27658750803" target="_blank" rel="noopener">065&nbsp;875&nbsp;0803</a></li>
           <li>Email <a href="mailto:info@automation247.co.za">info@automation247.co.za</a></li>
@@ -1085,21 +1096,26 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
         </ul>
       </div>
       <div>
-        <h4>How we work</h4>
+        <h4 class="foot-head">How we work</h4>
         <ul>
           <li>Fixed price, quoted before we start</li>
           <li>Half up front, half when it goes live</li>
           <li>You own the code, the domain and the accounts</li>
           <li>Logins live in a secrets store, never in the code</li>
           <li>An approval step wherever the decision matters</li>
-          <li><b>Level 1 B-BBEE contributor</b> &mdash; 135% procurement recognition, 100% black youth-owned</li>
-          <li><a href="#it-referral" style="font-weight:700">R500 for anyone who refers us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="foot-head">Good to know</h4>
+        <ul>
+          <li><b>Level 1</b> B-BBEE contributor</li>
+          <li>135% procurement recognition</li>
+          <li>100% black youth-owned</li>
+          <li><a href="#it-referral" style="font-weight:600">R500 for anyone who refers us</a></li>
         </ul>
       </div>
     </div>
-    <div class="ftr-btm">
-      <span>Automation247 (Pty) Ltd &middot; registration 2026/895425/07 &middot; Gauteng</span>
-    </div>
+    <div class="foot-btm"><span>Automation247 (Pty) Ltd</span> &middot; <span>Registration 2026/895425/07</span> &middot; <span>Gauteng, South Africa</span></div>
   </div>
 </footer>
 
@@ -1237,11 +1253,18 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   var form = document.getElementById('webForm');
   var done = document.getElementById('webDone');
   var msg  = document.getElementById('wDoneMsg');
+  var err  = document.getElementById('wErr');
+  var send = document.getElementById('wSend');
   if(!form) return;
-  /* There is no server behind this page, so the form cannot post anywhere.
-     Instead it writes the answers into a WhatsApp message and hands it to the
-     visitor to send - one tap, and it arrives as a real enquiry on the phone. */
+  /* Enquiries go to the info@ mailbox through FormSubmit - this page has no
+     server of its own. The first submission from the live domain makes
+     FormSubmit email info@ an activation link; nothing is forwarded until it
+     is clicked. Until then, and whenever sending fails, the same answers are
+     handed to the visitor as a WhatsApp message, so an enquiry is never
+     silently lost. */
+  var ENDPOINT  = 'https://formsubmit.co/ajax/info@automation247.co.za';
   var WA_NUMBER = '27658750803';
+  var SEND_LABEL = send ? send.textContent : 'Send it through';
 
   function val(id){
     var el = document.getElementById(id);
@@ -1252,30 +1275,125 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
     if(!el || el.selectedIndex < 0) return '';
     return (el.options[el.selectedIndex].textContent || '').replace(/\s+/g, ' ').trim();
   }
-
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var name = val('wname');
-    var ref  = val('wref');
-
-    var lines = ['Hi, I would like a quote.', ''];
-    if(name)        lines.push('Name: ' + name);
-    if(val('wbiz'))   lines.push('Business: ' + val('wbiz'));
-    if(val('wphone')) lines.push('WhatsApp: ' + val('wphone'));
-    if(val('wemail')) lines.push('Email: ' + val('wemail'));
-    if(picked('wpack')) lines.push('After: ' + picked('wpack'));
-    if(ref)         lines.push('Referred by: ' + ref);
-
-    var url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
-    var win = window.open(url, '_blank', 'noopener');
-    if(!win) window.location.href = url;   /* popup blocked - go directly */
-
-    msg.textContent = (name ? name + ', your' : 'Your')
-      + ' message is ready in WhatsApp \u2014 press send and it reaches us straight away'
-      + (ref ? '. We will let ' + ref.split(' ')[0] + ' know about their R500 once you are signed up.' : '.');
+  function emailOk(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
+  function mark(id, isBad){
+    var el = document.getElementById(id);
+    if(!el) return;
+    el.closest('.it-field').classList.toggle('is-bad', isBad);
+    el.setAttribute('aria-invalid', isBad ? 'true' : 'false');
+  }
+  /* returns the missing items, and marks the fields that need fixing */
+  function check(){
+    var missing = [];
+    var name = val('wname'), email = val('wemail'), need = val('wmsg');
+    mark('wname', !name);           if(!name) missing.push('your name');
+    mark('wemail', !emailOk(email)); if(!emailOk(email)) missing.push(email ? 'a valid email address' : 'your email address');
+    mark('wmsg', !need);            if(!need) missing.push('a few words about what you need');
+    return missing;
+  }
+  function listOf(items){
+    if(items.length < 2) return items.join('');
+    return items.slice(0, -1).join(', ') + ' and ' + items[items.length - 1];
+  }
+  function showErr(text, withWhatsApp){
+    err.textContent = text;
+    if(withWhatsApp){
+      var a = document.createElement('a');
+      a.href = waUrl(); a.target = '_blank'; a.rel = 'noopener';
+      a.textContent = 'Send the same message on WhatsApp instead';
+      err.appendChild(document.createTextNode(' '));
+      err.appendChild(a);
+    }
+    err.hidden = false;
+  }
+  function lines(){
+    var out = [];
+    if(val('wname'))  out.push('Name: ' + val('wname'));
+    if(val('wbiz'))   out.push('Business: ' + val('wbiz'));
+    if(val('wemail')) out.push('Email: ' + val('wemail'));
+    if(val('wphone')) out.push('WhatsApp: ' + val('wphone'));
+    if(picked('wpack')) out.push('After: ' + picked('wpack'));
+    if(val('wmsg'))   out.push('', val('wmsg'), '');
+    if(val('wref'))   out.push('Referred by: ' + val('wref'));
+    return out;
+  }
+  function waUrl(){
+    return 'https://wa.me/' + WA_NUMBER + '?text=' +
+      encodeURIComponent(['Hi, I would like a quote.', ''].concat(lines()).join('\n'));
+  }
+  function finish(text){
+    msg.textContent = text;
     form.hidden = true;
     done.hidden = false;
     done.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+  function busy(on){
+    form.dataset.sending = on ? '1' : '';
+    if(send){ send.disabled = on; send.textContent = on ? 'Sending\u2026' : SEND_LABEL; }
+  }
+
+  /* once a field has been flagged, clear the flag as soon as it is fixed */
+  form.addEventListener('input', function(e){
+    var f = e.target.closest('.it-field');
+    if(f && f.classList.contains('is-bad')){
+      var id = e.target.id, v = (e.target.value || '').trim();
+      mark(id, id === 'wemail' ? !emailOk(v) : !v);
+    }
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(form.dataset.sending === '1') return;          /* no double sends */
+    err.hidden = true;
+
+    var name = val('wname'), email = val('wemail'), ref = val('wref');
+    if(val('wHoney')){                                  /* a bot filled the trap */
+      finish('Thank you \u2014 your message is in our inbox.');
+      return;
+    }
+    var missing = check();
+    if(missing.length){
+      showErr('Please add ' + listOf(missing) + '.', false);
+      var first = form.querySelector('.it-field.is-bad input, .it-field.is-bad textarea');
+      if(first) first.focus();
+      return;
+    }
+
+    var payload = {
+      name: name,
+      business: val('wbiz'),
+      email: email,
+      whatsapp: val('wphone'),
+      after: picked('wpack'),
+      message: val('wmsg'),
+      referred_by: ref,
+      _subject: 'Project enquiry - ' + name + (val('wbiz') ? ', ' + val('wbiz') : ''),
+      _replyto: email,
+      _template: 'table',
+      _captcha: 'false'
+    };
+
+    busy(true);
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function(r){
+      return r.json().catch(function(){ return {}; }).then(function(j){
+        /* FormSubmit answers {success:"true"}; before activation it answers "false" */
+        if(!r.ok || String(j.success) !== 'true') throw new Error('not sent');
+      });
+    })
+    .then(function(){
+      busy(false);
+      finish(name + ', thank you \u2014 it is in our inbox. We will reply to ' + email + ' today'
+        + (ref ? ', and let ' + ref.split(' ')[0] + ' know about their R500 once you are signed up.' : '.'));
+    })
+    .catch(function(){
+      busy(false);
+      showErr('That did not send from here.', true);
+    });
   });
 })();
 
