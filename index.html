@@ -99,13 +99,16 @@ a{color:inherit}
 @media (max-width:1180px){
   .menubtn{display:grid}
   .hdr-in{flex-wrap:wrap;gap:10px}
-  .nav{display:none;order:9;width:100%;flex-direction:column;align-items:stretch;gap:0;
-    border-top:1px solid var(--it-line);padding-block:6px;margin-top:2px}
+  /* the phone menu drops down OVER the page, below the header, so opening
+     and closing it never moves anything behind it */
+  .nav{display:none;position:absolute;left:0;right:0;top:100%;
+    flex-direction:column;align-items:stretch;gap:0;padding:6px 20px;
+    background:var(--it-bg);border-bottom:1px solid var(--it-line);
+    box-shadow:0 22px 30px -24px rgba(11,13,16,.55)}
   .nav.open{display:flex;animation:nav-in .18s ease-out}
   /* closing: the links fade and lift one by one, bottom to top (--d is set
-     by the script: 0 for the bottom link), then the panel itself goes */
-  .nav.closing{display:flex;pointer-events:none;overflow:hidden;
-    transition:height var(--last,500ms) ease-in-out,padding var(--last,500ms) ease-in-out,margin var(--last,500ms) ease-in-out}
+     by the script: 0 for the bottom link), then the panel itself fades */
+  .nav.closing{display:flex;pointer-events:none;animation:nav-out .18s ease forwards;animation-delay:var(--last,0ms)}
   .nav.closing a{animation:nav-item-out .24s ease forwards;animation-delay:calc(var(--d,0) * 85ms)}
   .nav a{padding:13px 4px;font-size:16.5px;border-bottom:1px solid var(--it-line)}
   .nav a:last-child{border-bottom:0}
@@ -113,6 +116,7 @@ a{color:inherit}
 }
 @keyframes nav-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 @keyframes nav-item-out{to{opacity:0;transform:translateY(-8px)}}
+@keyframes nav-out{to{opacity:0}}
 
 .themebtn{flex:none;width:44px;height:44px;border-radius:50%;cursor:pointer;background:transparent;border:2px solid var(--it-line);color:var(--it-text);display:grid;place-items:center;transition:border-color .16s ease,color .16s ease}
 .themebtn:hover{border-color:var(--it-accent);color:var(--it-accent)}
@@ -1204,22 +1208,11 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
       /* the visible links fade out from the bottom up, then the panel */
       var links = [].slice.call(nav.querySelectorAll('a')).filter(function(a){ return !a.hidden; });
       links.forEach(function(a, i){ a.style.setProperty('--d', links.length - 1 - i); });
-      var last = (links.length - 1) * 85 + 240;
+      var last = (links.length - 1) * 85 + 200;
       nav.style.setProperty('--last', last + 'ms');
-      /* the panel shrinks from the bottom up as the links go, so the header
-         never shows an empty band and the page does not jump at the end */
-      nav.style.height = nav.offsetHeight + 'px';
       nav.classList.add('closing');
-      void nav.offsetHeight;                       /* start the shrink from here */
-      nav.style.height = '0px';
-      nav.style.paddingTop = nav.style.paddingBottom = '0px';
-      nav.style.marginTop = '0px';
-      closeTimer = setTimeout(function(){
-        nav.classList.remove('closing');
-        nav.style.height = nav.style.paddingTop = nav.style.paddingBottom = nav.style.marginTop = '';
-      }, last + 40);
+      closeTimer = setTimeout(function(){ nav.classList.remove('closing'); }, last + 200);
     } else {
-      nav.style.height = nav.style.paddingTop = nav.style.paddingBottom = nav.style.marginTop = '';
       nav.classList.remove('closing');
     }
     nav.classList.toggle('open', on);
@@ -1240,9 +1233,20 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   /* A tap anywhere else closes it. pointerdown, not click: iPhone Safari does
      not fire click for a tap on plain text or background, so a click listener
      never hears it and the menu stays open over the page. */
+  /* That tap only closes the menu: the click it would also produce is
+     swallowed, so it cannot press whatever was under the finger. */
+  var swallow = false, swallowTimer = null;
   document.addEventListener('pointerdown', function(e){
-    if(isOpen() && !nav.contains(e.target) && !btn.contains(e.target)) set(false);
+    if(isOpen() && !nav.contains(e.target) && !btn.contains(e.target)){
+      set(false);
+      swallow = true;
+      clearTimeout(swallowTimer);
+      swallowTimer = setTimeout(function(){ swallow = false; }, 700);
+    }
   }, { passive: true });
+  document.addEventListener('click', function(e){
+    if(swallow){ swallow = false; e.preventDefault(); e.stopPropagation(); }
+  }, true);
   /* and so does scrolling away from where it was opened */
   window.addEventListener('scroll', function(){
     if(isOpen() && Math.abs((window.pageYOffset || 0) - openedAt) > 40) set(false);
