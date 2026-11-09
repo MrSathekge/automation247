@@ -100,11 +100,15 @@ a{color:inherit}
   .hdr-in{flex-wrap:wrap;gap:10px}
   .nav{display:none;order:9;width:100%;flex-direction:column;align-items:stretch;gap:0;
     border-top:1px solid var(--it-line);padding-block:6px;margin-top:2px}
-  .nav.open{display:flex}
+  .nav.open{display:flex;animation:nav-in .18s ease-out}
+  /* closing: stays on screen just long enough to fade and lift away */
+  .nav.closing{display:flex;opacity:0;transform:translateY(-6px);
+    transition:opacity .2s ease,transform .2s ease;pointer-events:none}
   .nav a{padding:13px 4px;font-size:16.5px;border-bottom:1px solid var(--it-line)}
   .nav a:last-child{border-bottom:0}
   .brand-name{font-size:20px}
 }
+@keyframes nav-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 
 .themebtn{flex:none;width:44px;height:44px;border-radius:50%;cursor:pointer;background:transparent;border:2px solid var(--it-line);color:var(--it-text);display:grid;place-items:center;transition:border-color .16s ease,color .16s ease}
 .themebtn:hover{border-color:var(--it-accent);color:var(--it-accent)}
@@ -1183,9 +1187,18 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   if(!btn || !nav) return;
   var open = btn.querySelector('.m-open'), close = btn.querySelector('.m-close');
 
-  var openedAt = 0;
+  var openedAt = 0, closeTimer = null;
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function isOpen(){ return nav.classList.contains('open'); }
   function set(on){
+    clearTimeout(closeTimer);
+    if(!on && isOpen() && !calm){
+      /* fade it out, then take it off the page */
+      nav.classList.add('closing');
+      closeTimer = setTimeout(function(){ nav.classList.remove('closing'); }, 220);
+    } else {
+      nav.classList.remove('closing');
+    }
     nav.classList.toggle('open', on);
     btn.setAttribute('aria-expanded', on ? 'true' : 'false');
     open.hidden = on; close.hidden = !on;
