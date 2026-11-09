@@ -250,17 +250,19 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
 
 /* ---- the worker panel, drawn as a flow: one overnight job, five stations.
    Side by side when the panel is wide, stacked when it is narrow (the panel
-   is the container, so it follows the panel, not the window). --p is how far
-   along the run is, 0 to 1; the line fill and the travelling dot read it. */
+   is the container, so it follows the panel, not the window). */
 .it-term{container-type:inline-size}
 .it-flow{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
-  padding:22px 0 16px;border-bottom:1px solid var(--it-line);--p:1}
-.it-flow::before{content:"";position:absolute;left:10%;right:10%;top:42px;height:2px;background:var(--it-line)}
-.it-flow-fill{position:absolute;left:10%;top:42px;height:2px;width:calc(var(--p) * 80%);
-  background:var(--it-accent);transition:width .6s ease,height .6s ease}
-.it-flow-dot{position:absolute;top:37px;left:calc(10% + var(--p) * 80%);width:12px;height:12px;margin-left:-6px;
-  border-radius:50%;background:var(--it-accent);box-shadow:0 0 0 4px var(--it-accent-soft);opacity:0;
-  transition:left .6s ease,top .6s ease,opacity .3s}
+  padding:22px 0 16px;border-bottom:1px solid var(--it-line)}
+/* the line is drawn by the script through the centre of each station, so the
+   same code makes a straight row on a wide panel and a U-turn on a narrow one */
+.it-flow-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.it-flow-svg polyline{fill:none;stroke-width:2;stroke-linejoin:round}
+.it-flow-track{stroke:var(--it-line)}
+.it-flow-run{stroke:var(--it-accent);transition:stroke-dashoffset .6s ease}
+.it-flow-dot{position:absolute;left:0;top:0;width:12px;height:12px;margin:-6px 0 0 -6px;
+  border-radius:50%;background:var(--it-accent);box-shadow:0 0 0 4px var(--it-accent-soft);opacity:0;z-index:2;
+  transition:transform .6s ease,opacity .3s}
 .it-flow.running .it-flow-dot{opacity:1}
 .it-st{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;min-width:0;padding:0 3px}
 .it-st-node{width:42px;height:42px;flex:none;border-radius:10px;display:grid;place-items:center;z-index:1;
@@ -277,15 +279,17 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
 .it-st.on b,.it-st.done b{color:var(--it-text)}
 .it-st.on span,.it-st.done span{opacity:1}
 @container (max-width:440px){
-  .it-flow{grid-template-columns:1fr;gap:10px;padding:16px}
-  .it-flow::before{left:36px;right:auto;width:2px;top:37px;bottom:37px;height:auto}
-  .it-flow-fill{left:36px;width:2px;top:37px;height:calc(var(--p) * (100% - 74px))}
-  .it-flow-dot{left:37px;top:calc(37px + var(--p) * (100% - 74px) - 6px)}
-  .it-st{flex-direction:row;text-align:left;gap:12px;padding:0}
-  .it-st.on .it-st-node{transform:translateX(2px)}
+  /* three across the top, then the line turns down and comes back along the
+     bottom: Sign in, Pull data, Match ledger / Report sent, Human check */
+  .it-flow{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:18px;padding:18px 4px 14px}
+  .it-st:nth-child(6){grid-row:2;grid-column:3}   /* 4th station (svg and dot come first) */
+  .it-st:nth-child(7){grid-row:2;grid-column:2}   /* 5th station */
+  /* the downward turn crosses a label: let the line pass behind it */
+  .it-st-txt{position:relative;z-index:1;background:var(--it-panel);padding:1px 4px;border-radius:4px}
+}
 }
 @media (prefers-reduced-motion:reduce){
-  .it-flow-fill,.it-flow-dot,.it-st-node,.it-st-txt b,.it-st-txt span{transition:none}
+  .it-flow-run,.it-flow-dot,.it-st-node,.it-st-txt b,.it-st-txt span{transition:none}
 }
 
 /* stats */
@@ -843,7 +847,7 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
           <span id="itTitle">ai.worker.run &mdash; 03:00 nightly</span>
         </div>
         <div class="it-flow" id="itFlow" aria-hidden="true">
-          <div class="it-flow-fill"></div><div class="it-flow-dot"></div>
+          <svg class="it-flow-svg" aria-hidden="true"><polyline class="it-flow-track"/><polyline class="it-flow-run"/></svg><div class="it-flow-dot"></div>
           <div class="it-st done"><div class="it-st-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div><div class="it-st-txt"><b>Sign in</b><span>partner portal</span></div></div>
           <div class="it-st done"><div class="it-st-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg></div><div class="it-st-txt"><b>Pull data</b><span>1&nbsp;284 rows</span></div></div>
           <div class="it-st done"><div class="it-st-node"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor"><circle cx="50" cy="50" r="40" stroke-width="9"/><circle cx="50" cy="50" r="10" fill="currentColor" stroke="none"/></svg></div><div class="it-st-txt"><b>Match ledger</b><span class="ok">1&nbsp;281 ok</span></div></div>
@@ -1567,20 +1571,63 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   ];
   var timers = [];
 
+  /* The line runs through the centre of each station node, measured from the
+     page itself, so it follows whatever shape the layout takes (a straight
+     row, or the U-turn on a phone). cum[i] = line length up to station i. */
+  var track = flow && flow.querySelector('.it-flow-track');
+  var run   = flow && flow.querySelector('.it-flow-run');
+  var fdot  = flow && flow.querySelector('.it-flow-dot');
+  var pts = [], cum = [], total = 0, reached = st.length;
+  function measure(){
+    if(!flow) return;
+    var fr = flow.getBoundingClientRect();
+    pts = st.map(function(s){
+      var r = s.querySelector('.it-st-node').getBoundingClientRect();
+      return [r.left - fr.left + r.width / 2, r.top - fr.top + r.height / 2];
+    });
+    var str = pts.map(function(p){ return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' ');
+    track.setAttribute('points', str);
+    run.setAttribute('points', str);
+    cum = [0]; total = 0;
+    for(var i = 1; i < pts.length; i++){
+      total += Math.hypot(pts[i][0] - pts[i-1][0], pts[i][1] - pts[i-1][1]);
+      cum.push(total);
+    }
+    run.style.transition = 'none';               /* a resize should not animate */
+    run.style.strokeDasharray = total + ' ' + total;
+    draw(reached);
+    void run.getBoundingClientRect();
+    run.style.transition = '';
+  }
+  function draw(n){
+    if(!flow || !pts.length) return;
+    var upto = n ? cum[n - 1] : 0;
+    run.style.strokeDashoffset = (total - upto) + 'px';
+    var p = pts[Math.max(0, n - 1)];
+    fdot.style.transform = 'translate(' + p[0] + 'px,' + p[1] + 'px)';
+  }
   /* n = how many stations the run has reached, 0 to 5 */
   function stage(n){
     if(!flow) return;
+    reached = n;
     st.forEach(function(s, i){
       s.classList.toggle('done', i < n - 1);
       s.classList.toggle('on', i === n - 1);
     });
-    flow.style.setProperty('--p', n ? (n - 1) / 4 : 0);
+    draw(n);
   }
   function finished(){
     if(!flow) return;
+    reached = st.length;
     flow.classList.remove('running');
     st.forEach(function(s){ s.classList.remove('on'); s.classList.add('done'); });
-    flow.style.setProperty('--p', 1);
+    draw(st.length);
+  }
+  if(flow){
+    measure();
+    if('ResizeObserver' in window) new ResizeObserver(measure).observe(flow);
+    else window.addEventListener('resize', measure);
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   }
 
   /* The button nudges when it comes into view, and again if you wander off and
