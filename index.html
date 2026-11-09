@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title>Automation247 - business automation, AI workers and websites, South Africa</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
 <meta name="description" content="Automation247 builds the systems behind the business: websites that take bookings and quote themselves, online shops with a PayFast or Yoco checkout, internal tools that replace a spreadsheet, and AI workers that sign in to partner platforms overnight. Fixed prices, quoted up front.">
 <meta name="theme-color" content="#F7F8FA">
 <link rel="canonical" href="https://automation247.co.za/">
@@ -573,6 +574,7 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
 .foot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
 .foot li b{color:var(--it-text);font-weight:600}
 .foot a{color:var(--it-accent);overflow-wrap:anywhere}
+.foot-url-short{display:none}
 .foot-btm{margin-top:26px;padding-top:14px;border-top:1px solid var(--it-line);
   text-align:center;font-size:12.5px;color:var(--it-faint)}
 .foot-btm span{white-space:nowrap}
@@ -583,6 +585,11 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   .foot{padding-block:24px 16px}
   .foot-grid{gap:18px 16px}
   .foot-about{grid-column:1 / -1}
+  /* the fourth column would sit alone in a row: let it span, items two by two */
+  .foot-good{grid-column:1 / -1}
+  .foot-good ul{display:grid;grid-template-columns:1fr 1fr;gap:5px 16px}
+  .foot-url-long{display:none}
+  .foot-url-short{display:inline}
   .foot-head{height:20px;margin-bottom:7px;font-size:var(--it-ph3,11px);letter-spacing:1.3px}
   .foot-brand{font-size:var(--it-ph2,14px);letter-spacing:-.2px}
   .foot p,.foot li{font-size:var(--it-ph3,11px);line-height:1.5}
@@ -1140,17 +1147,16 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
           </svg>
           <span>Automation<b>247</b></span>
         </div>
-        <p>We build the systems behind the business. Sites that take bookings, internal tools that replace a
-        spreadsheet, and AI workers that sign in overnight so nobody has to.</p>
-        <p class="foot-note"><strong>Where the name came from.</strong> The work runs while you are asleep.
-        That is the whole idea.</p>
+        <p>We build the systems behind the business: sites that take bookings, tools that replace a
+        spreadsheet, and AI workers that run overnight.</p>
+        <p class="foot-note"><strong>Why 247?</strong> The work runs while you sleep.</p>
       </div>
       <div>
         <h4 class="foot-head">Get in touch</h4>
         <ul>
           <li>WhatsApp <a href="https://wa.me/27785577643" target="_blank" rel="noopener">078&nbsp;557&nbsp;7643</a></li>
           <li>Email <a href="mailto:info@automation247.co.za">info@automation247.co.za</a></li>
-          <li>Portfolio <a href="https://caron-sathekge-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer">caron-sathekge-portfolio.vercel.app</a></li>
+          <li><span class="foot-url-long">Portfolio </span><a href="https://caron-sathekge-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer"><span class="foot-url-long">caron-sathekge-portfolio.vercel.app</span><span class="foot-url-short">Caron&rsquo;s portfolio</span></a></li>
           <li>Working with clients anywhere</li>
         </ul>
       </div>
@@ -1158,14 +1164,12 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
         <h4 class="foot-head">How we work</h4>
         <ul>
           <li>Fixed price, quoted before we start</li>
-          <li>Websites: half up front, half when it goes live</li>
-          <li>Larger systems: 40% to start, 30% at a demo, 30% at go-live</li>
-          <li>You own the code, the domain and the accounts</li>
-          <li>Logins live in a secrets store, never in the code</li>
-          <li>An approval step wherever the decision matters</li>
+          <li>Paid in stages, never all up front</li>
+          <li>You own the code, domain and accounts</li>
+          <li>An approval step where decisions matter</li>
         </ul>
       </div>
-      <div>
+      <div class="foot-good">
         <h4 class="foot-head">Good to know</h4>
         <ul>
           <li><b>Level 1</b> B-BBEE contributor</li>
