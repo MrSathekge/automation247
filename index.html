@@ -101,14 +101,17 @@ a{color:inherit}
   .nav{display:none;order:9;width:100%;flex-direction:column;align-items:stretch;gap:0;
     border-top:1px solid var(--it-line);padding-block:6px;margin-top:2px}
   .nav.open{display:flex;animation:nav-in .18s ease-out}
-  /* closing: stays on screen just long enough to fade and lift away */
-  .nav.closing{display:flex;opacity:0;transform:translateY(-6px);
-    transition:opacity .2s ease,transform .2s ease;pointer-events:none}
+  /* closing: the links fade and lift one by one, bottom to top (--d is set
+     by the script: 0 for the bottom link), then the panel itself goes */
+  .nav.closing{display:flex;pointer-events:none;animation:nav-out .16s ease forwards;animation-delay:var(--last,0ms)}
+  .nav.closing a{animation:nav-item-out .24s ease forwards;animation-delay:calc(var(--d,0) * 85ms)}
   .nav a{padding:13px 4px;font-size:16.5px;border-bottom:1px solid var(--it-line)}
   .nav a:last-child{border-bottom:0}
   .brand-name{font-size:20px}
 }
 @keyframes nav-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@keyframes nav-item-out{to{opacity:0;transform:translateY(-8px)}}
+@keyframes nav-out{to{opacity:0}}
 
 .themebtn{flex:none;width:44px;height:44px;border-radius:50%;cursor:pointer;background:transparent;border:2px solid var(--it-line);color:var(--it-text);display:grid;place-items:center;transition:border-color .16s ease,color .16s ease}
 .themebtn:hover{border-color:var(--it-accent);color:var(--it-accent)}
@@ -1193,9 +1196,13 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   function set(on){
     clearTimeout(closeTimer);
     if(!on && isOpen() && !calm){
-      /* fade it out, then take it off the page */
+      /* the visible links fade out from the bottom up, then the panel */
+      var links = [].slice.call(nav.querySelectorAll('a')).filter(function(a){ return !a.hidden; });
+      links.forEach(function(a, i){ a.style.setProperty('--d', links.length - 1 - i); });
+      var last = (links.length - 1) * 85 + 200;
+      nav.style.setProperty('--last', last + 'ms');
       nav.classList.add('closing');
-      closeTimer = setTimeout(function(){ nav.classList.remove('closing'); }, 220);
+      closeTimer = setTimeout(function(){ nav.classList.remove('closing'); }, last + 180);
     } else {
       nav.classList.remove('closing');
     }
