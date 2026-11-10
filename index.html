@@ -37,6 +37,7 @@
     "name": "Websites",
     "itemListElement": [
       {"@type":"Offer","name":"Starter site","price":"6500","priceCurrency":"ZAR"},
+      {"@type":"Offer","name":"Website redesign","priceSpecification":{"@type":"PriceSpecification","minPrice":"8500","priceCurrency":"ZAR"}},
       {"@type":"Offer","name":"Full site","price":"14000","priceCurrency":"ZAR"},
       {"@type":"Offer","name":"Booking site","price":"27500","priceCurrency":"ZAR"},
       {"@type":"Offer","name":"Keep it running, monthly","price":"1500","priceCurrency":"ZAR"}
@@ -971,7 +972,7 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
       <div class="it-cap"><span class="it-cap-top"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="it-cap-n">06</span></span><h3>Online shops</h3><p>A shop you actually own, not a rented page on somebody else&rsquo;s platform. Product pages, a cart that remembers, and a checkout wired to PayFast, Yoco or Ozow so the money lands in your account. Stock counts down as it sells, your customer gets their order email, and you get one screen that shows what to pack.</p></div>
       <div class="it-cap"><span class="it-cap-top"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M3 9h6"/></svg><span class="it-cap-n">07</span></span><h3>Internal tools</h3><p>The thing your team runs the business on. Review queues, approval steps, an admin screen that replaces a shared spreadsheet, and a record of who decided what and when.</p></div>
       <div class="it-cap"><span class="it-cap-top"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="7" cy="6" rx="4" ry="2.2"/><path d="M3 6v6c0 1.2 1.8 2.2 4 2.2s4-1 4-2.2V6"/><path d="M13 12h6M19 12l-2.4-2.4M19 12l-2.4 2.4"/><rect x="17" y="17" width="5" height="4" rx="1"/></svg><span class="it-cap-n">08</span></span><h3>Data pipelines and reconciliation</h3><p>Files landing overnight, records matched between two systems that name things differently, and a flag raised on whatever does not agree &mdash; before a customer finds it.</p></div>
-      <div class="it-cap it-wide"><span class="it-cap-top"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 21H3l9.7-9.7a4 4 0 0 0 2-5z"/><circle cx="17" cy="7" r="0"/></svg><span class="it-cap-n">09</span></span><h3>Fixing what you already have</h3><div class="it-wide-body"><p>A site that loads slowly, looks wrong on a phone, or cannot be found on Google. A contact form that quietly stopped sending and nobody noticed for a month. A security certificate that expired, so every visitor now meets a warning page before they meet you.</p><p>We look at what is actually there and tell you honestly which it is. Most of the time it is a few hours of work rather than a rebuild, and we would rather say that than sell you a new site you do not need. If it genuinely has to be rebuilt we will say that too &mdash; and you are free to take the advice and go elsewhere with it.</p></div></div>
+      <div class="it-cap it-wide"><span class="it-cap-top"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 21H3l9.7-9.7a4 4 0 0 0 2-5z"/><circle cx="17" cy="7" r="0"/></svg><span class="it-cap-n">09</span></span><h3>Fixing what you already have</h3><div class="it-wide-body"><p>A site that loads slowly, looks wrong on a phone, or cannot be found on Google. A contact form that quietly stopped sending and nobody noticed for a month. A security certificate that expired, so every visitor now meets a warning page before they meet you.</p><p>We look at what is actually there and tell you honestly which it is. Most of the time it is a few hours of work rather than a rebuild, and we would rather say that than sell you a new site you do not need. If it genuinely has to be rebuilt we will say that too &mdash; that is a website redesign, from R8&nbsp;500 &mdash; and you are free to take the advice and go elsewhere with it.</p></div></div>
     </div>
   </section>
 
@@ -992,6 +993,18 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
               <span class="it-opt-note">One scrolling page designed for you, an enquiry form straight to your phone, and your Google Business Profile set up. Handed over in 1 to 2 weeks.</span>
             </span>
             <span class="it-opt-cost">R6 500</span>
+          </span>
+        </label>
+
+        <label class="it-opt" for="wkRedesign">
+          <input type="radio" name="wpkg" id="wkRedesign" class="opt-input wk" data-price="8500" data-from="1" data-label="Redesign" data-value="redesign" data-weeks="1 to 2 weeks">
+          <span class="it-opt-card">
+            <span class="it-radio" aria-hidden="true"></span>
+            <span class="it-opt-body">
+              <span class="it-opt-name">Redesign &mdash; your old site, rebuilt properly</span>
+              <span class="it-opt-note">Your existing site, up to ten pages, rebuilt on your own brand. Your content brought across and tidied up, your old pages redirected so you keep your Google ranking, and your Google Business Profile checked. Handed over in 1 to 2 weeks.</span>
+            </span>
+            <span class="it-opt-cost">from R8 500</span>
           </span>
         </label>
 
@@ -1044,6 +1057,7 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
         </label>
 
         <p class="it-fine">Half up front, half when it goes live. You own everything at the end &mdash; the domain, the code, the accounts.</p>
+        <p class="it-fine">Not sure what&rsquo;s wrong with your current site? <a href="#webquote">Send us the link</a> and we&rsquo;ll tell you what we&rsquo;d fix &mdash; free.</p>
 
         <p class="it-elsewhere"><a href="#it-rates">
           <b>Not a website?</b> Internal tools, data work and AI workers are quoted after a conversation
@@ -1103,6 +1117,7 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
         <div class="it-field full"><label for="wpack">What are you after?</label>
           <select id="wpack" name="package">
             <option value="starter">Starter &mdash; R6 500</option>
+            <option value="redesign">Redesign my existing website &mdash; from R8 500</option>
             <option value="business" selected>Full site &mdash; R14 000</option>
             <option value="booking">Booking site &mdash; R27 500</option>
             <option value="shop">Shop &mdash; R34 500</option>
@@ -1320,9 +1335,10 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
     if(chosen){
       var li = document.createElement('li');
       var a = document.createElement('span'); a.textContent = chosen.dataset.label;
-      var b = document.createElement('span'); b.textContent = rand(Number(chosen.dataset.price));
+      var from = chosen.dataset.from ? 'from ' : '';
+      var b = document.createElement('span'); b.textContent = from + rand(Number(chosen.dataset.price));
       li.appendChild(a); li.appendChild(b); lines.appendChild(li);
-      total.textContent = rand(Number(chosen.dataset.price));
+      total.textContent = from + rand(Number(chosen.dataset.price));
       note.textContent  = 'Handed over in ' + chosen.dataset.weeks + '.';
       if(sel){
         var has = Array.prototype.some.call(sel.options, function(o){ return o.value === chosen.dataset.value; });
