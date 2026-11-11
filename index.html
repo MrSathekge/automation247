@@ -735,6 +735,89 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
 }
 
 
+/* a partner-offers tracker: sales on partner offers through an invented month, a
+   month-end projection, an early warning and the reminder that fixes it. Loops on screen. */
+.it-po{margin:24px 0 0;background:var(--it-panel);border:1px solid var(--it-line);border-radius:10px;overflow:hidden}
+.it-po-bar{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--it-line);
+  font:500 12.5px var(--it-mono);color:var(--it-dim)}
+.it-po-dot{width:8px;height:8px;border-radius:50%;background:var(--it-faint);flex:none}
+.it-po-day{margin-left:auto;white-space:nowrap;font-variant-numeric:tabular-nums}
+.it-po-pill{font:600 11px var(--it-mono);letter-spacing:.4px;padding:3px 8px;border-radius:999px;white-space:nowrap;
+  border:1px solid var(--it-line);color:var(--it-faint)}
+.it-po[data-st="warn"] .it-po-pill{color:var(--it-warn);border-color:var(--it-warn);background:color-mix(in srgb,var(--it-warn) 12%,transparent)}
+.it-po[data-st="ok"] .it-po-pill{color:var(--it-ok);border-color:var(--it-ok);background:color-mix(in srgb,var(--it-ok) 12%,transparent)}
+.it-po[data-st="warn"] .it-po-dot{background:var(--it-warn)}
+.it-po[data-st="ok"] .it-po-dot{background:var(--it-ok)}
+
+.it-po-top{display:grid;grid-template-columns:1.6fr 1fr}
+.it-po-main{padding:14px 16px;border-right:1px solid var(--it-line);min-width:0}
+.it-po-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.it-po-kpi span{display:block;font:500 10.5px var(--it-mono);letter-spacing:1px;text-transform:uppercase;color:var(--it-faint)}
+.it-po-kpi b{display:block;font:600 21px var(--it-sans);letter-spacing:-.4px;font-variant-numeric:tabular-nums;white-space:nowrap;margin-top:2px}
+.it-po-kpi small{display:block;font:12px var(--it-mono);color:var(--it-faint);white-space:nowrap}
+.it-po[data-st="warn"] #itPoProj{color:var(--it-warn)}
+.it-po[data-st="ok"] #itPoProj{color:var(--it-ok)}
+.it-po-chart{display:block;width:100%;height:200px;margin-top:10px}
+.it-po-chart text{font:11px var(--it-mono);fill:var(--it-faint)}
+
+.it-po-feed{padding:14px 16px;background:var(--it-sunk);min-width:0;display:flex;flex-direction:column}
+div.it-po-h{font:500 10.5px var(--it-mono);letter-spacing:1px;text-transform:uppercase;color:var(--it-faint);margin:0 0 8px}
+.it-po-events{display:flex;flex-direction:column;gap:8px;height:236px;overflow:hidden}
+.it-po-ev:nth-child(n+4){display:none}   /* the three newest: the panel never changes size */
+.it-po-ev{display:grid;grid-template-columns:8px 1fr;gap:10px;padding:9px 11px;border:1px solid var(--it-line);border-radius:8px;
+  background:var(--it-panel);font-size:13px;line-height:1.45;color:var(--it-dim);animation:it-po-in .35s ease-out}
+.it-po-ev i{width:8px;height:8px;border-radius:50%;margin-top:6px;background:var(--it-accent)}
+.it-po-ev.warn i{background:var(--it-warn)} .it-po-ev.ok i{background:var(--it-ok)}
+.it-po-ev b{color:var(--it-text);font-weight:600}
+.it-po-ev em{font-style:normal;font:12px var(--it-mono);color:var(--it-faint);display:block}
+@keyframes it-po-in{from{opacity:0;transform:translateY(-6px)}}
+
+.it-po-partners{border-top:1px solid var(--it-line);padding:12px 16px}
+.it-po-row{display:grid;grid-template-columns:minmax(0,1.5fr) 92px minmax(0,1.3fr) 74px;gap:14px;align-items:center;
+  padding:7px 0;border-bottom:1px solid var(--it-line);font-size:13.5px}
+.it-po-row:last-child{border-bottom:0}
+.it-po-row.head{font:500 10.5px var(--it-mono);letter-spacing:1px;text-transform:uppercase;color:var(--it-faint);padding-top:0}
+.it-po-name{min-width:0}
+.it-po-name b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.it-po-name small{display:block;font:12px var(--it-mono);color:var(--it-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.it-po-sold{font:500 13px var(--it-mono);text-align:right;font-variant-numeric:tabular-nums}
+.it-po-track{position:relative;height:6px;border-radius:3px;background:var(--it-sunk)}
+.it-po-track i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--it-faint)}
+.it-po-track u{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--it-text);opacity:.5;left:calc(100% / 1.2)}
+.it-po-pct{font:500 12px var(--it-mono);text-align:right;white-space:nowrap;color:var(--it-faint)}
+.it-po-row.ok .it-po-track i{background:var(--it-ok)} .it-po-row.ok .it-po-pct{color:var(--it-ok)}
+.it-po-row.warn .it-po-track i{background:var(--it-warn)} .it-po-row.warn .it-po-pct{color:var(--it-warn)}
+
+.it-po-foot{display:flex;justify-content:space-between;gap:10px;padding:8px 16px;border-top:1px solid var(--it-line);
+  font:12px var(--it-mono);color:var(--it-faint)}
+
+@media (max-width:720px){
+  .it-po-top{grid-template-columns:1fr}
+  .it-po-main{border-right:0;padding:10px 13px}
+  .it-po-bar{padding:9px 13px;font-size:12px;gap:8px}
+  .it-po-name-long{display:none}
+  .it-po-kpi b{font-size:16px}
+  .it-po-kpi span{font-size:9.5px;letter-spacing:.6px}
+  .it-po-kpi small{font-size:10px;white-space:normal;line-height:1.3}
+  .it-po-chart{height:132px;margin-top:6px}
+  .it-po-feed{padding:8px 13px;border-top:1px solid var(--it-line)}
+  .it-po-h{display:none}
+  .it-po-events{height:58px;overflow:hidden}
+  .it-po-ev{font-size:12px;padding:6px 9px;line-height:1.35}
+  .it-po-ev:nth-child(n+2){display:none}
+  .it-po-ev em{display:inline;margin-right:6px}
+  .it-po-partners{padding:6px 13px}
+  .it-po-row{grid-template-columns:minmax(0,1fr) 46px 44px 38px;gap:7px;padding:5px 0;font-size:12.5px}
+  .it-po-name small{display:none}
+  .it-po-row.head{display:none}
+  .it-po-foot span + span{display:none}
+  .it-po-sold{font-size:11.5px}
+  .it-po-pct{font-size:11px}
+  .it-po-foot{padding:7px 13px;font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){ .it-po-ev{animation:none} }
+
+
 /* ================= phone tier =================
    Last in the sheet on purpose: several base rules are declared after the
    component blocks, so an override placed earlier silently loses. */
@@ -1066,23 +1149,32 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
     </div>
   </section>
 
-  <section class="wrap it-section" id="it-example">
-    <span class="it-eyebrow">// an ai worker, at work</span>
-    <h2>Work that gets done while you do yours</h2>
-    <p class="it-sub">This is one AI worker on a typical job: six batches of documents and photos that someone would otherwise open, save and zip by hand. It runs in the background &mdash; nobody has to sit and watch it.</p>
-    <figure class="it-dl" id="itDl" aria-label="Illustrated example of a single AI worker: it works through six batches of documents and photos, from supplier invoices to product photos, and saves each batch as a zip file in the background - 150 files in all.">
-      <div class="it-dl-bar" aria-hidden="true"><span class="it-dl-live"></span>batch.export<span class="it-dl-long">&mdash; running in the background</span><span class="it-dl-count" id="itDlCount">0 of 150 files</span></div>
-      <div class="it-dl-body" aria-hidden="true">
-        <div class="it-dl-q"><div class="it-dl-h">Queue</div><div id="itDlJobs"></div></div>
-        <div class="it-dl-tray">
-          <div class="it-dl-h">Saved to Downloads</div>
-          <div class="it-dl-files" id="itDlFiles"><span class="it-dl-empty">Nothing yet&hellip;</span></div>
-          <p class="it-dl-note"><strong>Nobody clicks &ldquo;save&rdquo; 150 times.</strong> The worker opens each batch, collects the documents and photos and zips them &mdash; you keep working.</p>
+  <section class="wrap it-section" id="it-tracker">
+    <span class="it-eyebrow">// see the month before it ends</span>
+    <h2>Know how the month will end &mdash; while you can still change it</h2>
+    <p class="it-sub">A partner-offers tracker: it follows sales on every partner offer, projects the month end from the last week&rsquo;s pace, and warns you early when the numbers look low &mdash; so you can nudge your members while there is still time, and keep your partners happy.</p>
+    <figure class="it-po" id="itPo" data-st="" aria-label="Illustrated example: a partner-offers tracker follows sales through November. By day 7 the month-end projection is 85% of target, so the owner reminds members who have not used an offer yet; by day 14 the projection is back on track and the month closes above target. All names and numbers are invented.">
+      <div class="it-po-bar" aria-hidden="true"><span class="it-po-dot"></span>offers.tracker<span class="it-po-name-long">&mdash; November</span><span class="it-po-pill" id="itPoPill">measuring</span><span class="it-po-day" id="itPoDay">day 0 of 30</span></div>
+      <div class="it-po-top" aria-hidden="true">
+        <div class="it-po-main">
+          <div class="it-po-kpis">
+            <div class="it-po-kpi"><span>Sold so far</span><b id="itPoSold">R0</b><small id="itPoSoldN">&nbsp;</small></div>
+            <div class="it-po-kpi"><span>Month end</span><b id="itPoProj">&mdash;</b><small id="itPoProjN">from day 7</small></div>
+            <div class="it-po-kpi"><span>Target</span><b id="itPoTarget">R0</b><small>5 partners</small></div>
+          </div>
+          <svg class="it-po-chart" id="itPoChart"></svg>
+        </div>
+        <div class="it-po-feed">
+          <div class="it-po-h">What happened</div>
+          <div class="it-po-events" id="itPoEvents"></div>
         </div>
       </div>
-      <figcaption class="it-dl-foot">Example only &mdash; invented names and numbers</figcaption>
+      <div class="it-po-partners" aria-hidden="true" id="itPoRows">
+        <div class="it-po-row head"><span>Partner offer</span><span style="text-align:right">Sold</span><span>Month end vs target</span><span style="text-align:right">Proj.</span></div>
+      </div>
+      <figcaption class="it-po-foot">Example only &mdash; invented partners and numbers</figcaption>
     </figure>
-    <p class="it-dl-more"><a href="#it-rates">A single AI worker is R12&nbsp;000 &ndash; R25&nbsp;000. <span>See the prices</span>
+    <p class="it-dl-more"><a href="#it-rates">A system like this is quoted after a conversation, from R48&nbsp;000. <span>See the prices</span>
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a></p>
   </section>
 
@@ -1116,6 +1208,26 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
       <div class="it-cap"><span class="it-cap-top"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="7" cy="6" rx="4" ry="2.2"/><path d="M3 6v6c0 1.2 1.8 2.2 4 2.2s4-1 4-2.2V6"/><path d="M13 12h6M19 12l-2.4-2.4M19 12l-2.4 2.4"/><rect x="17" y="17" width="5" height="4" rx="1"/></svg><span class="it-cap-n">08</span></span><h3>Data pipelines and reconciliation</h3><p>Files landing overnight, records matched between two systems that name things differently, and a flag raised on whatever does not agree &mdash; before a customer finds it.</p></div>
       <div class="it-cap it-wide"><span class="it-cap-top"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 21H3l9.7-9.7a4 4 0 0 0 2-5z"/><circle cx="17" cy="7" r="0"/></svg><span class="it-cap-n">09</span></span><h3>Fixing what you already have</h3><div class="it-wide-body"><p>A site that loads slowly, looks wrong on a phone, or cannot be found on Google. A contact form that quietly stopped sending and nobody noticed for a month. A security certificate that expired, so every visitor now meets a warning page before they meet you.</p><p>We look at what is actually there and tell you honestly which it is. Most of the time it is a few hours of work rather than a rebuild, and we would rather say that than sell you a new site you do not need. If it genuinely has to be rebuilt we will say that too &mdash; that is a website redesign, R8&nbsp;500 &mdash; and you are free to take the advice and go elsewhere with it.</p></div></div>
     </div>
+  </section>
+
+  <section class="wrap it-section" id="it-example">
+    <span class="it-eyebrow">// an ai worker, at work</span>
+    <h2>Work that gets done while you do yours</h2>
+    <p class="it-sub">This is one AI worker on a typical job: six batches of documents and photos that someone would otherwise open, save and zip by hand. It runs in the background &mdash; nobody has to sit and watch it.</p>
+    <figure class="it-dl" id="itDl" aria-label="Illustrated example of a single AI worker: it works through six batches of documents and photos, from supplier invoices to product photos, and saves each batch as a zip file in the background - 150 files in all.">
+      <div class="it-dl-bar" aria-hidden="true"><span class="it-dl-live"></span>batch.export<span class="it-dl-long">&mdash; running in the background</span><span class="it-dl-count" id="itDlCount">0 of 150 files</span></div>
+      <div class="it-dl-body" aria-hidden="true">
+        <div class="it-dl-q"><div class="it-dl-h">Queue</div><div id="itDlJobs"></div></div>
+        <div class="it-dl-tray">
+          <div class="it-dl-h">Saved to Downloads</div>
+          <div class="it-dl-files" id="itDlFiles"><span class="it-dl-empty">Nothing yet&hellip;</span></div>
+          <p class="it-dl-note"><strong>Nobody clicks &ldquo;save&rdquo; 150 times.</strong> The worker opens each batch, collects the documents and photos and zips them &mdash; you keep working.</p>
+        </div>
+      </div>
+      <figcaption class="it-dl-foot">Example only &mdash; invented names and numbers</figcaption>
+    </figure>
+    <p class="it-dl-more"><a href="#it-rates">A single AI worker is R12&nbsp;000 &ndash; R25&nbsp;000. <span>See the prices</span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a></p>
   </section>
 
   <section class="wrap it-section" id="it-pricing">
@@ -1857,6 +1969,162 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   }
 
   btn.addEventListener('click', function(){ used = true; play(); });
+})();
+
+/* ---- Automation247: partner-offers tracker (month-end projection) ---- */
+(function(){
+
+  /* invented month: daily sales on partner offers, R thousands. Slow start,
+     a reminder to members on day 10, then a stronger second half. */
+  var DAILY = [6.9,5.2,5.0,5.3,5.6,6.4,7.4,6.6,5.0,6.6,6.9,7.0,8.1,9.0,8.4,
+               6.7,6.6,6.9,7.2,8.2,9.2,8.5,6.8,6.9,7.1,7.3,9.4,9.8,8.9,7.6].map(function(x){ return Math.round(x * 1000); });
+  var DAYS = 30, TARGET = 210000, NUDGE = 10, MEMBERS = 1240, FIRST = 7, OKAT = 0.95;
+  var PARTNERS = [                         /* name, offer, share of sales, own target */
+    ['Bean & Brew',        '2-for-1 flat white',     .25, 50000],
+    ['Greenleaf Grocer',   '10% off a basket',       .34, 70000],
+    ['Pulse Cycle Studio', 'first class free',       .15, 30000],
+    ['TreadRight Tyres',   'free wheel alignment',   .16, 35000],
+    ['Page Turner Books',  'R50 off R300',           .10, 25000]
+  ];
+  var cum = [0]; DAILY.forEach(function(v, i){ cum.push(cum[i] + v); });
+  function proj(d){                        /* so far + last seven days' pace x days left */
+    if(d < FIRST) return null;
+    return Math.round((cum[d] + (cum[d] - cum[d - 7]) / 7 * (DAYS - d)) / 100) * 100;
+  }
+  function st(p, d){ return p === null ? '' : (p / TARGET >= (d === DAYS ? 1 : OKAT) ? 'ok' : 'warn'); }
+  function R(n){ return 'R' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+  function Rk(n){ return 'R' + Math.round(n / 1000) + 'k'; }
+  function pc(n){ return Math.round(n * 100) + '%'; }
+
+  /* the story, read off the numbers rather than typed in */
+  var EVENTS = [];
+  (function(){
+    var p = proj(FIRST);
+    EVENTS.push([FIRST, 'warn', 'day ' + FIRST, '<b>At risk.</b> Month end is heading for ' + R(p) + ' &mdash; ' + pc(p / TARGET) + ' of target.']);
+    EVENTS.push([FIRST + 1, '', 'suggested', 'Remind the ' + MEMBERS.toLocaleString('en-ZA').replace(/,/g, ' ') + ' members who haven&rsquo;t used an offer yet this month.']);
+    EVENTS.push([NUDGE, '', 'day ' + NUDGE, '<b>Reminder sent</b> &mdash; double points on partner offers this weekend.']);
+    for(var d = NUDGE; d <= DAYS; d++){ if(st(proj(d), d) === 'ok'){
+      EVENTS.push([d, 'ok', 'day ' + d, '<b>Back on track.</b> Month end now ' + R(proj(d)) + ' &mdash; ' + pc(proj(d) / TARGET) + '.']); break; } }
+    var met = PARTNERS.filter(function(x){ return cum[DAYS] * x[2] >= x[3]; }).length;
+    EVENTS.push([DAYS, 'ok', 'day ' + DAYS, '<b>Month closed at ' + R(cum[DAYS]) + '</b> &mdash; ' + pc(cum[DAYS] / TARGET) + ' of target. ' + met + ' of ' + PARTNERS.length + ' partners met theirs.']);
+  })();
+
+  /* time: a day every 0.3 s, with a pause on each event */
+  var PER = 0.3, HOLD = 1.3, END_HOLD = 3.2;
+  var holds = {}; EVENTS.forEach(function(e){ holds[e[0]] = HOLD; });
+  var marks = [], acc = 0;                 /* marks[d] = time the run reaches day d */
+  for(var d = 0; d <= DAYS; d++){ marks[d] = acc; acc += (d < DAYS ? PER : 0) + (holds[d] || 0); }
+  var END = marks[DAYS] + 0.05, LOOP = marks[DAYS] + END_HOLD;
+  function dayAt(t){
+    for(var d = 0; d < DAYS; d++){
+      var go = marks[d] + (holds[d] || 0);
+      if(t < go) return d;
+      if(t < marks[d + 1]) return d + (t - go) / PER;
+    }
+    return DAYS;
+  }
+
+  var el = function(id){ return document.getElementById(id); };
+  var box = el('itPo');
+  if(!box) return;
+  var svg = el('itPoChart'), evBox = el('itPoEvents');
+  el('itPoTarget').textContent = R(TARGET);
+  var rows = PARTNERS.map(function(p){
+    var r = document.createElement('div');
+    r.className = 'it-po-row';
+    r.innerHTML = '<div class="it-po-name"><b></b><small></small></div><span class="it-po-sold">R0</span><span class="it-po-track"><i></i><u></u></span><span class="it-po-pct">&mdash;</span>';
+    r.querySelector('b').textContent = p[0];
+    r.querySelector('small').textContent = p[1];
+    el('itPoRows').appendChild(r);
+    return { el: r, sold: r.querySelector('.it-po-sold'), bar: r.querySelector('i'), pct: r.querySelector('.it-po-pct') };
+  });
+  var evEls = EVENTS.map(function(e){
+    var n = document.createElement('div');
+    n.className = 'it-po-ev ' + e[1];
+    n.innerHTML = '<i></i><div><em>' + e[2] + '</em>' + e[3] + '</div>';
+    return n;
+  });
+
+  var last = { f: -1, w: 0, theme: '' }, shown = -1;
+  function draw(f){
+    if(f === undefined) f = last.f;
+    var W = svg.clientWidth || 600, H = svg.clientHeight || 200;
+    var pad = { l: 40, r: 10, t: 10, b: 20 }, cw = W - pad.l - pad.r, ch = H - pad.t - pad.b, YMAX = 240000;
+    var X = function(d){ return pad.l + d / DAYS * cw; }, Y = function(v){ return pad.t + ch - v / YMAX * ch; };
+    var cs = getComputedStyle(box), c = function(n){ return cs.getPropertyValue(n).trim(); };
+    var d = Math.floor(f), p = proj(d), s = st(p, d), col = s === 'ok' ? c('--it-ok') : s === 'warn' ? c('--it-warn') : c('--it-faint');
+    var g = '';
+    [0, 100000, 200000].forEach(function(v){
+      g += '<line x1="' + pad.l + '" x2="' + (W - pad.r) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="' + c('--it-line') + '"/>';
+      g += '<text x="' + (pad.l - 6) + '" y="' + (Y(v) + 4) + '" text-anchor="end">' + (v ? Rk(v) : 'R0') + '</text>';
+    });
+    [1, 10, 20, 30].forEach(function(x){ g += '<text x="' + X(x) + '" y="' + (H - 4) + '" text-anchor="middle">' + x + '</text>'; });
+    g += '<line x1="' + pad.l + '" x2="' + (W - pad.r) + '" y1="' + Y(TARGET) + '" y2="' + Y(TARGET) + '" stroke="' + c('--it-text') + '" stroke-opacity=".45" stroke-dasharray="2 4"/>';
+    g += '<text x="' + (W - pad.r) + '" y="' + (Y(TARGET) - 6) + '" text-anchor="end">target</text>';
+    if(f >= NUDGE){
+      g += '<line x1="' + X(NUDGE) + '" x2="' + X(NUDGE) + '" y1="' + pad.t + '" y2="' + (H - pad.b) + '" stroke="' + c('--it-accent') + '" stroke-opacity=".5" stroke-dasharray="3 3"/>';
+      g += '<text x="' + (X(NUDGE) + 5) + '" y="' + (pad.t + 10) + '" fill="' + c('--it-accent') + '" style="fill:' + c('--it-accent') + '">reminder</text>';
+    }
+    if(p !== null){
+      g += '<line x1="' + X(d) + '" y1="' + Y(cum[d]) + '" x2="' + X(DAYS) + '" y2="' + Y(p) + '" stroke="' + col + '" stroke-width="2" stroke-dasharray="5 4"/>';
+      g += '<circle cx="' + X(DAYS) + '" cy="' + Y(p) + '" r="4" fill="' + col + '"/>';
+    }
+    var pts = [];
+    for(var i = 0; i <= d; i++) pts.push(X(i) + ',' + Y(cum[i]));
+    if(f > d && d < DAYS) pts.push(X(f) + ',' + Y(cum[d] + DAILY[d] * (f - d)));
+    if(pts.length > 1) g += '<polyline points="' + pts.join(' ') + '" fill="none" stroke="' + c('--it-accent') + '" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+    var lx = f > d && d < DAYS ? f : d, lv = f > d && d < DAYS ? cum[d] + DAILY[d] * (f - d) : cum[d];
+    g += '<circle cx="' + X(lx) + '" cy="' + Y(lv) + '" r="4" fill="' + c('--it-accent') + '"/>';
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.innerHTML = g;
+  }
+
+  function render(t){
+    var f = dayAt(t), d = Math.floor(f), p = proj(d), s = st(p, d);
+    box.setAttribute('data-st', s);
+    el('itPoDay').textContent = 'day ' + d + ' of ' + DAYS;
+    el('itPoPill').textContent = s === 'ok' ? (d === DAYS ? 'target met' : 'on track') : s === 'warn' ? 'at risk' : 'measuring';
+    el('itPoSold').textContent = R(cum[d]);
+    el('itPoSoldN').textContent = d ? pc(cum[d] / TARGET) + ' of target' : ' ';
+    el('itPoProj').textContent = p === null ? '—' : R(p);
+    el('itPoProjN').textContent = p === null ? 'from day ' + FIRST : d === DAYS ? 'final' : pc(p / TARGET) + ' of target';
+    PARTNERS.forEach(function(x, i){
+      var r = rows[i], pp = p === null ? null : p * x[2], ratio = pp === null ? 0 : pp / x[3];
+      r.sold.textContent = Rk(cum[d] * x[2]);
+      r.bar.style.width = Math.min(100, ratio / 1.2 * 100).toFixed(1) + '%';
+      r.pct.textContent = pp === null ? '—' : pc(ratio);
+      r.el.className = 'it-po-row' + (pp === null ? '' : ratio >= (d === DAYS ? 1 : OKAT) - 1e-9 ? ' ok' : ' warn');
+    });
+    var n = 0; EVENTS.forEach(function(e){ if(f >= e[0]) n++; });
+    if(n !== shown){                       /* newest first */
+      shown = n;
+      evEls.forEach(function(x){ if(x.parentNode) x.parentNode.removeChild(x); });
+      for(var k = n - 1; k >= 0; k--) evBox.appendChild(evEls[k]);
+    }
+    if(Math.abs(f - last.f) > 1e-6 || svg.clientWidth !== last.w){ last.f = f; last.w = svg.clientWidth; draw(f); }
+  }
+  window.addEventListener('resize', function(){ draw(); });
+  /* the site's light/dark switch: the chart colours are read when it draws */
+  if(window.MutationObserver) new MutationObserver(function(){ draw(); })
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce || !window.requestAnimationFrame){ render(END); return; }
+  /* loops while on screen, stops off screen */
+  var raf = null, t0 = null;
+  function frame(now){
+    if(t0 === null) t0 = now;
+    render(((now - t0) / 1000) % LOOP);
+    raf = requestAnimationFrame(frame);
+  }
+  function start(){ if(!raf){ t0 = null; raf = requestAnimationFrame(frame); } }
+  function stop(){ if(raf){ cancelAnimationFrame(raf); raf = null; } }
+  render(0);
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting) start(); else stop(); });
+    }, { threshold: 0.3 }).observe(box);
+  } else { start(); }
 })();
 
 /* ---- Automation247: one AI worker, for example (background downloads) ---- */
