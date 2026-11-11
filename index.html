@@ -613,6 +613,110 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
 }
 @media (max-width:360px){.foot-grid{grid-template-columns:1fr}}
 
+/* a price is one word now that thousands take a space */
+.it-opt-cost,#wSumTotal,#wSumCareAmt{white-space:nowrap}
+
+
+/* a portfolio piece you can actually go and look at */
+.it-visit{color:inherit;text-decoration:none;border-bottom:1px solid var(--it-line);
+  display:inline-flex;align-items:center;gap:6px}
+.it-visit:hover{color:var(--it-accent);border-bottom-color:var(--it-accent)}
+.it-visit svg{flex:none;opacity:.7}
+#services .it-row p .it-visit{color:var(--it-accent);border-bottom-color:transparent;font-weight:600}
+#services .it-row p .it-visit:hover{border-bottom-color:var(--it-accent)}
+
+
+/* points at the rates below rather than offering a fourth box to tick */
+.it-elsewhere{margin-top:14px!important}
+.it-elsewhere a{display:flex;align-items:flex-start;gap:9px;text-decoration:none;
+  font-size:13.5px;line-height:1.55;color:var(--it-dim);
+  border:1px dashed var(--it-line);border-radius:7px;padding:11px 13px}
+.it-elsewhere a:hover{border-color:var(--it-accent);color:var(--it-text)}
+.it-elsewhere b{color:var(--it-text)}
+.it-elsewhere svg{flex:none;margin-top:2px;color:var(--it-accent)}
+@media (max-width:620px){
+  [data-view="services"] #services .it-elsewhere a{font-size:12px;padding:9px 11px;gap:7px}
+  [data-view="services"] #services .it-elsewhere{margin-top:10px!important}
+}
+
+
+/* the link from the pricing picker lands here, so it needs to say where here
+   is - and to clear the sticky header when it does */
+.it-rates-head{margin-top:34px;scroll-margin-top:104px}
+.it-rates-head h3{font-size:21px;font-weight:600;letter-spacing:-.3px;margin:6px 0 0}
+.it-rates-head p{margin-top:6px!important;max-width:60ch}
+.it-rates-head + .it-rates{margin-top:14px}
+@media (max-width:620px){
+  .it-rates-head{margin-top:22px;scroll-margin-top:86px}
+  [data-view="services"] #services .it-rates-head h3{font-size:var(--it-ph2,14px)}
+}
+
+
+/* one AI worker, for example: a queue of document batches saved as zips in the
+   background. Invented names and numbers; plays once when it comes into view. */
+.it-dl{margin:18px 0 0;border:1px solid var(--it-line);border-radius:10px;overflow:hidden;background:var(--it-panel)}
+.it-dl-bar{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--it-line);
+  font:500 12.5px var(--it-mono);color:var(--it-dim)}
+.it-dl-live{width:8px;height:8px;border-radius:50%;background:var(--it-faint);flex:none}
+.it-dl.running .it-dl-live{background:var(--it-accent);animation:it-dl-pulse 2s infinite}
+.it-dl.finished .it-dl-live{background:var(--it-ok)}
+.it-dl-count{margin-left:auto;color:var(--it-accent);white-space:nowrap;font-variant-numeric:tabular-nums}
+@keyframes it-dl-pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--it-accent) 60%,transparent)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.it-dl-body{display:grid;grid-template-columns:1.55fr 1fr}
+.it-dl-h{font:500 11px var(--it-mono);letter-spacing:1.2px;text-transform:uppercase;color:var(--it-faint);margin:0 0 6px}
+.it-dl-q{padding:16px;border-right:1px solid var(--it-line);min-width:0}
+.it-dl-job{display:grid;grid-template-columns:22px minmax(0,1fr) auto;align-items:center;column-gap:12px;row-gap:6px;
+  padding:9px 0;border-bottom:1px solid var(--it-line)}
+.it-dl-job:last-child{border-bottom:0}
+.it-dl-ic{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--it-line);color:var(--it-faint)}
+.it-dl-ic svg{width:12px;height:12px;opacity:0}
+.it-dl-job b{font:500 14px var(--it-sans);color:var(--it-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.it-dl-st{font:500 12px var(--it-mono);color:var(--it-faint);white-space:nowrap;font-variant-numeric:tabular-nums}
+.it-dl-bar2{grid-column:2 / 4;height:4px;border-radius:2px;background:var(--it-sunk);overflow:hidden}
+.it-dl-bar2 i{display:block;height:100%;width:0;background:var(--it-accent);border-radius:2px}
+.it-dl-job.run b,.it-dl-job.done b{color:var(--it-text)}
+.it-dl-job.run .it-dl-ic{border-color:var(--it-accent);border-top-color:transparent;animation:it-dl-spin .8s linear infinite}
+.it-dl-job.run .it-dl-st{color:var(--it-accent)}
+.it-dl-job.done .it-dl-ic{border-color:var(--it-ok);color:var(--it-ok);background:color-mix(in srgb,var(--it-ok) 14%,transparent)}
+.it-dl-job.done .it-dl-ic svg{opacity:1}
+.it-dl-job.done .it-dl-st{color:var(--it-ok)}
+.it-dl-job.done .it-dl-bar2 i{background:var(--it-ok)}
+@keyframes it-dl-spin{to{transform:rotate(360deg)}}
+.it-dl-tray{padding:16px;background:var(--it-sunk);display:flex;flex-direction:column;min-width:0}
+.it-dl-files{display:flex;flex-direction:column;gap:8px;flex:1;min-height:364px}
+.it-dl-file{display:flex;align-items:center;gap:10px;padding:9px 11px;background:var(--it-panel);
+  border:1px solid var(--it-line);border-radius:8px;animation:it-dl-in .35s ease-out}
+@keyframes it-dl-in{from{opacity:0;transform:translateY(-6px)}}
+.it-dl-zip{width:30px;height:34px;flex:none;border-radius:4px;border:1.5px solid var(--it-accent);color:var(--it-accent);
+  display:grid;place-items:center;font:600 8px var(--it-mono);letter-spacing:.4px;background:var(--it-accent-soft)}
+.it-dl-file div{min-width:0}
+.it-dl-file b{display:block;font:500 12.5px var(--it-mono);color:var(--it-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.it-dl-file small{display:block;font:12px var(--it-mono);color:var(--it-faint)}
+.it-dl-empty{font:12px var(--it-mono);color:var(--it-faint)}
+.it-dl-note{margin:12px 0 0!important;font-size:13px!important;line-height:1.5;color:var(--it-dim)}
+.it-dl-note strong{color:var(--it-text);font-weight:600}
+.it-dl-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 16px;
+  border-top:1px solid var(--it-line);font:12px var(--it-mono);color:var(--it-faint)}
+.it-dl-again{font:500 12px var(--it-mono);color:var(--it-accent);background:none;cursor:pointer;
+  border:1px solid var(--it-line);border-radius:6px;padding:6px 10px;min-height:32px;white-space:nowrap}
+.it-dl-again:hover{border-color:var(--it-accent)}
+.it-dl-again:disabled{opacity:.45;cursor:default}
+@media (max-width:720px){
+  .it-dl-body{grid-template-columns:1fr}
+  .it-dl-q{border-right:0;border-bottom:1px solid var(--it-line)}
+  .it-dl-files{min-height:0}
+}
+@media (max-width:480px){
+  .it-dl-long{display:none}
+  .it-dl-q,.it-dl-tray{padding:14px 13px}
+  .it-dl-foot{padding:9px 13px}
+}
+@media (prefers-reduced-motion:reduce){
+  .it-dl-again{display:none}
+  .it-dl-file{animation:none}
+}
+
+
 /* ================= phone tier =================
    Last in the sheet on purpose: several base rules are declared after the
    component blocks, so an override placed earlier silently loses. */
@@ -1091,6 +1195,19 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
       <div><span class="it-rate-k">a single ai worker</span><span class="it-rate-v">R12 000 &ndash; R25 000</span><span class="it-rate-n">One job taken off someone&rsquo;s hands, start to finish.</span></div>
       <div><span class="it-rate-k">changes &amp; small jobs</span><span class="it-rate-v">R600 an hour</span><span class="it-rate-n">Billed in half hours, with the estimate given first.</span></div>
     </div>
+
+    <figure class="it-dl" id="itDl" aria-label="Illustrated example of a single AI worker: it works through six batches of documents, from supplier invoices to signed contracts, and saves each batch as a zip file in the background - 150 files in all.">
+      <div class="it-dl-bar" aria-hidden="true"><span class="it-dl-live"></span>batch.export<span class="it-dl-long">&mdash; running in the background</span><span class="it-dl-count" id="itDlCount">0 of 150 files</span></div>
+      <div class="it-dl-body" aria-hidden="true">
+        <div class="it-dl-q"><div class="it-dl-h">Queue</div><div id="itDlJobs"></div></div>
+        <div class="it-dl-tray">
+          <div class="it-dl-h">Saved to Downloads</div>
+          <div class="it-dl-files" id="itDlFiles"><span class="it-dl-empty">Nothing yet&hellip;</span></div>
+          <p class="it-dl-note"><strong>Nobody clicks &ldquo;save&rdquo; 150 times.</strong> The worker opens each batch, collects the files and zips them &mdash; you keep working.</p>
+        </div>
+      </div>
+      <figcaption class="it-dl-foot"><span>One AI worker, for example &mdash; invented names and numbers</span><button class="it-dl-again" id="itDlAgain" type="button">Run it again</button></figcaption>
+    </figure>
   </section>
 
   <section class="wrap it-section" id="it-refsec">
@@ -1715,6 +1832,95 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   }
 
   btn.addEventListener('click', function(){ used = true; play(); });
+})();
+
+/* ---- Automation247: one AI worker, for example (background downloads) ---- */
+(function(){
+  var box = document.getElementById('itDl');
+  var jobsEl = document.getElementById('itDlJobs'), filesEl = document.getElementById('itDlFiles');
+  var countEl = document.getElementById('itDlCount'), again = document.getElementById('itDlAgain');
+  if(!box || !jobsEl || !filesEl) return;
+  /* invented batches: name, files, zip */
+  var JOBS = [
+    ['Supplier invoices \u2014 October', 32, 'supplier-invoices-2026-10.zip'],
+    ['Bank statements \u2014 Q3',         12, 'bank-statements-2026-q3.zip'],
+    ['Delivery notes \u2014 week 44',     41, 'delivery-notes-wk44.zip'],
+    ['Payslips \u2014 October',           18, 'payslips-2026-10.zip'],
+    ['Customer statements',             25, 'customer-statements.zip'],
+    ['Signed contracts',                22, 'signed-contracts.zip']
+  ];
+  var TOTAL = 0; JOBS.forEach(function(j){ TOTAL += j[1]; });
+  var START = 0.6, GAP = 1.15, RUN = 2.1;              /* seconds; two batches overlap */
+  var END = START + GAP * (JOBS.length - 1) + RUN + 0.05;
+  var TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>';
+  var empty = filesEl.querySelector('.it-dl-empty');
+
+  var rows = JOBS.map(function(j){
+    var d = document.createElement('div');
+    d.className = 'it-dl-job';
+    d.innerHTML = '<span class="it-dl-ic">' + TICK + '</span><b></b><span class="it-dl-st">queued</span><span class="it-dl-bar2"><i></i></span>';
+    d.querySelector('b').textContent = j[0];
+    jobsEl.appendChild(d);
+    return { el: d, st: d.querySelector('.it-dl-st'), bar: d.querySelector('i') };
+  });
+  var tiles = JOBS.map(function(j){
+    var f = document.createElement('div');
+    f.className = 'it-dl-file';
+    f.innerHTML = '<span class="it-dl-zip">ZIP</span><div><b></b><small></small></div>';
+    f.querySelector('b').textContent = j[2];
+    f.querySelector('small').textContent = j[1] + ' files';
+    return f;
+  });
+  var shownNow = -1;
+
+  function render(t){                       /* t = seconds into the run */
+    var got = 0, shown = 0;
+    JOBS.forEach(function(j, i){
+      var p = Math.max(0, Math.min(1, (t - START - GAP * i) / RUN)), n = Math.floor(p * j[1]), r = rows[i];
+      got += n;
+      r.el.classList.toggle('run', p > 0 && p < 1);
+      r.el.classList.toggle('done', p >= 1);
+      r.bar.style.width = (p * 100).toFixed(1) + '%';
+      r.st.textContent = p <= 0 ? 'queued' : p < 1 ? n + ' / ' + j[1] : 'zipped';
+      if(p >= 1) shown++;
+    });
+    if(shown !== shownNow){                 /* newest zip on top, like a downloads list */
+      shownNow = shown;
+      tiles.forEach(function(f){ if(f.parentNode) f.parentNode.removeChild(f); });
+      for(var k = shown - 1; k >= 0; k--) filesEl.appendChild(tiles[k]);
+      if(empty) empty.style.display = shown ? 'none' : '';
+    }
+    countEl.textContent = got + ' of ' + TOTAL + ' files';
+  }
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce || !window.requestAnimationFrame){ render(END); box.classList.add('finished'); return; }
+
+  var raf = null;
+  function play(){
+    if(raf) cancelAnimationFrame(raf);
+    var t0 = null;
+    box.classList.remove('finished'); box.classList.add('running');
+    again.disabled = true;
+    (function frame(now){
+      if(t0 === null) t0 = now;
+      var t = (now - t0) / 1000;
+      render(Math.min(t, END));
+      if(t < END){ raf = requestAnimationFrame(frame); return; }
+      raf = null;
+      box.classList.remove('running'); box.classList.add('finished');
+      again.disabled = false;
+    })(performance.now());
+  }
+
+  render(0);
+  if('IntersectionObserver' in window){
+    var seen = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ seen.disconnect(); play(); } });
+    }, { threshold: 0.45 });
+    seen.observe(box);
+  } else { play(); }
+  again.addEventListener('click', play);
 })();
 
 /* ---- Automation247: let the page read itself ---- */
