@@ -697,6 +697,12 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
 .it-dl-note strong{color:var(--it-text);font-weight:600}
 .it-dl-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 16px;
   border-top:1px solid var(--it-line);font:12px var(--it-mono);color:var(--it-faint)}
+#it-example .it-dl{margin-top:24px}
+.it-dl-more{margin:14px 0 0!important;font-size:14px}
+.it-dl-more a{color:var(--it-dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
+.it-dl-more span{color:var(--it-accent);font-weight:600;border-bottom:1px solid transparent}
+.it-dl-more a:hover span{border-bottom-color:var(--it-accent)}
+.it-dl-more svg{color:var(--it-accent)}
 /* phone: the whole panel fits on one screen - tighter rows, and the downloads
    list keeps the three newest zips (fixed height, so nothing below it moves) */
 @media (max-width:720px){
@@ -1060,6 +1066,26 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
     </div>
   </section>
 
+  <section class="wrap it-section" id="it-example">
+    <span class="it-eyebrow">// an ai worker, at work</span>
+    <h2>Work that gets done while you do yours</h2>
+    <p class="it-sub">This is one AI worker on a typical job: six batches of documents and photos that someone would otherwise open, save and zip by hand. It runs in the background &mdash; nobody has to sit and watch it.</p>
+    <figure class="it-dl" id="itDl" aria-label="Illustrated example of a single AI worker: it works through six batches of documents and photos, from supplier invoices to product photos, and saves each batch as a zip file in the background - 150 files in all.">
+      <div class="it-dl-bar" aria-hidden="true"><span class="it-dl-live"></span>batch.export<span class="it-dl-long">&mdash; running in the background</span><span class="it-dl-count" id="itDlCount">0 of 150 files</span></div>
+      <div class="it-dl-body" aria-hidden="true">
+        <div class="it-dl-q"><div class="it-dl-h">Queue</div><div id="itDlJobs"></div></div>
+        <div class="it-dl-tray">
+          <div class="it-dl-h">Saved to Downloads</div>
+          <div class="it-dl-files" id="itDlFiles"><span class="it-dl-empty">Nothing yet&hellip;</span></div>
+          <p class="it-dl-note"><strong>Nobody clicks &ldquo;save&rdquo; 150 times.</strong> The worker opens each batch, collects the documents and photos and zips them &mdash; you keep working.</p>
+        </div>
+      </div>
+      <figcaption class="it-dl-foot">Example only &mdash; invented names and numbers</figcaption>
+    </figure>
+    <p class="it-dl-more"><a href="#it-rates">A single AI worker is R12&nbsp;000 &ndash; R25&nbsp;000. <span>See the prices</span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a></p>
+  </section>
+
   <section class="wrap it-section">
     <span class="it-eyebrow">// what we do</span>
     <h2>Websites, and the things that run underneath them</h2>
@@ -1207,19 +1233,6 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
       <div><span class="it-rate-k">a single ai worker</span><span class="it-rate-v">R12 000 &ndash; R25 000</span><span class="it-rate-n">One job taken off someone&rsquo;s hands, start to finish.</span></div>
       <div><span class="it-rate-k">changes &amp; small jobs</span><span class="it-rate-v">R600 an hour</span><span class="it-rate-n">Billed in half hours, with the estimate given first.</span></div>
     </div>
-
-    <figure class="it-dl" id="itDl" aria-label="Illustrated example of a single AI worker: it works through six batches of documents and photos, from supplier invoices to product photos, and saves each batch as a zip file in the background - 150 files in all.">
-      <div class="it-dl-bar" aria-hidden="true"><span class="it-dl-live"></span>batch.export<span class="it-dl-long">&mdash; running in the background</span><span class="it-dl-count" id="itDlCount">0 of 150 files</span></div>
-      <div class="it-dl-body" aria-hidden="true">
-        <div class="it-dl-q"><div class="it-dl-h">Queue</div><div id="itDlJobs"></div></div>
-        <div class="it-dl-tray">
-          <div class="it-dl-h">Saved to Downloads</div>
-          <div class="it-dl-files" id="itDlFiles"><span class="it-dl-empty">Nothing yet&hellip;</span></div>
-          <p class="it-dl-note"><strong>Nobody clicks &ldquo;save&rdquo; 150 times.</strong> The worker opens each batch, collects the documents and photos and zips them &mdash; you keep working.</p>
-        </div>
-      </div>
-      <figcaption class="it-dl-foot">Example only &mdash; invented names and numbers</figcaption>
-    </figure>
   </section>
 
   <section class="wrap it-section" id="it-refsec">
