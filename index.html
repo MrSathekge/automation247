@@ -697,22 +697,34 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
 .it-dl-note strong{color:var(--it-text);font-weight:600}
 .it-dl-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 16px;
   border-top:1px solid var(--it-line);font:12px var(--it-mono);color:var(--it-faint)}
-.it-dl-again{font:500 12px var(--it-mono);color:var(--it-accent);background:none;cursor:pointer;
-  border:1px solid var(--it-line);border-radius:6px;padding:6px 10px;min-height:32px;white-space:nowrap}
-.it-dl-again:hover{border-color:var(--it-accent)}
-.it-dl-again:disabled{opacity:.45;cursor:default}
+/* phone: the whole panel fits on one screen - tighter rows, and the downloads
+   list keeps the three newest zips (fixed height, so nothing below it moves) */
 @media (max-width:720px){
   .it-dl-body{grid-template-columns:1fr}
   .it-dl-q{border-right:0;border-bottom:1px solid var(--it-line)}
-  .it-dl-files{min-height:0}
+  .it-dl-bar{padding:9px 13px;font-size:12px}
+  .it-dl-q,.it-dl-tray{padding:10px 13px}
+  .it-dl-h{font-size:10px;margin-bottom:2px}
+  .it-dl-job{grid-template-columns:18px minmax(0,1fr) auto;column-gap:10px;row-gap:4px;padding:6px 0}
+  .it-dl-ic{width:18px;height:18px}
+  .it-dl-ic svg{width:10px;height:10px}
+  .it-dl-job b{font-size:13px}
+  .it-dl-st{font-size:11px}
+  .it-dl-bar2{height:3px}
+  .it-dl-files{flex:none;min-height:0;height:102px;overflow:hidden;gap:5px}
+  .it-dl-file{padding:5px 9px;gap:9px}
+  .it-dl-file:nth-child(n+5){display:none}
+  .it-dl-zip{width:auto;height:18px;padding:0 4px;font-size:7.5px;border-width:1px;border-radius:3px}
+  .it-dl-file div{display:flex;align-items:baseline;gap:8px;flex:1}
+  .it-dl-file b{font-size:11.5px;flex:1}
+  .it-dl-file small{font-size:11px;flex:none}
+  .it-dl-note{margin-top:8px!important;font-size:12px!important;line-height:1.45}
+  .it-dl-foot{padding:7px 13px;font-size:11px}
 }
 @media (max-width:480px){
   .it-dl-long{display:none}
-  .it-dl-q,.it-dl-tray{padding:14px 13px}
-  .it-dl-foot{padding:9px 13px}
 }
 @media (prefers-reduced-motion:reduce){
-  .it-dl-again{display:none}
   .it-dl-file{animation:none}
 }
 
@@ -1196,17 +1208,17 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
       <div><span class="it-rate-k">changes &amp; small jobs</span><span class="it-rate-v">R600 an hour</span><span class="it-rate-n">Billed in half hours, with the estimate given first.</span></div>
     </div>
 
-    <figure class="it-dl" id="itDl" aria-label="Illustrated example of a single AI worker: it works through six batches of documents, from supplier invoices to signed contracts, and saves each batch as a zip file in the background - 150 files in all.">
+    <figure class="it-dl" id="itDl" aria-label="Illustrated example of a single AI worker: it works through six batches of documents and photos, from supplier invoices to product photos, and saves each batch as a zip file in the background - 150 files in all.">
       <div class="it-dl-bar" aria-hidden="true"><span class="it-dl-live"></span>batch.export<span class="it-dl-long">&mdash; running in the background</span><span class="it-dl-count" id="itDlCount">0 of 150 files</span></div>
       <div class="it-dl-body" aria-hidden="true">
         <div class="it-dl-q"><div class="it-dl-h">Queue</div><div id="itDlJobs"></div></div>
         <div class="it-dl-tray">
           <div class="it-dl-h">Saved to Downloads</div>
           <div class="it-dl-files" id="itDlFiles"><span class="it-dl-empty">Nothing yet&hellip;</span></div>
-          <p class="it-dl-note"><strong>Nobody clicks &ldquo;save&rdquo; 150 times.</strong> The worker opens each batch, collects the files and zips them &mdash; you keep working.</p>
+          <p class="it-dl-note"><strong>Nobody clicks &ldquo;save&rdquo; 150 times.</strong> The worker opens each batch, collects the documents and photos and zips them &mdash; you keep working.</p>
         </div>
       </div>
-      <figcaption class="it-dl-foot"><span>One AI worker, for example &mdash; invented names and numbers</span><button class="it-dl-again" id="itDlAgain" type="button">Run it again</button></figcaption>
+      <figcaption class="it-dl-foot">Example only &mdash; invented names and numbers</figcaption>
     </figure>
   </section>
 
@@ -1838,16 +1850,16 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
 (function(){
   var box = document.getElementById('itDl');
   var jobsEl = document.getElementById('itDlJobs'), filesEl = document.getElementById('itDlFiles');
-  var countEl = document.getElementById('itDlCount'), again = document.getElementById('itDlAgain');
+  var countEl = document.getElementById('itDlCount');
   if(!box || !jobsEl || !filesEl) return;
   /* invented batches: name, files, zip */
   var JOBS = [
-    ['Supplier invoices \u2014 October', 32, 'supplier-invoices-2026-10.zip'],
-    ['Bank statements \u2014 Q3',         12, 'bank-statements-2026-q3.zip'],
-    ['Delivery notes \u2014 week 44',     41, 'delivery-notes-wk44.zip'],
-    ['Payslips \u2014 October',           18, 'payslips-2026-10.zip'],
-    ['Customer statements',             25, 'customer-statements.zip'],
-    ['Signed contracts',                22, 'signed-contracts.zip']
+    ['Supplier invoices — October', 32, 'supplier-invoices-2026-10.zip', 'files'],
+    ['Product photos — new range',  41, 'product-photos.zip',            'photos'],
+    ['Bank statements — Q3',         12, 'bank-statements-2026-q3.zip',   'files'],
+    ['Site inspection photos',          25, 'inspection-photos.zip',         'photos'],
+    ['Delivery notes — week 44',     18, 'delivery-notes-wk44.zip',       'files'],
+    ['Signed contracts',                22, 'signed-contracts.zip',          'files']
   ];
   var TOTAL = 0; JOBS.forEach(function(j){ TOTAL += j[1]; });
   var START = 0.6, GAP = 1.15, RUN = 2.1;              /* seconds; two batches overlap */
@@ -1868,7 +1880,7 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
     f.className = 'it-dl-file';
     f.innerHTML = '<span class="it-dl-zip">ZIP</span><div><b></b><small></small></div>';
     f.querySelector('b').textContent = j[2];
-    f.querySelector('small').textContent = j[1] + ' files';
+    f.querySelector('small').textContent = j[1] + ' ' + j[3];
     return f;
   });
   var shownNow = -1;
@@ -1896,31 +1908,29 @@ input:focus,select:focus{border-color:var(--it-accent);outline:none}
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduce || !window.requestAnimationFrame){ render(END); box.classList.add('finished'); return; }
 
-  var raf = null;
-  function play(){
-    if(raf) cancelAnimationFrame(raf);
-    var t0 = null;
-    box.classList.remove('finished'); box.classList.add('running');
-    again.disabled = true;
-    (function frame(now){
-      if(t0 === null) t0 = now;
-      var t = (now - t0) / 1000;
-      render(Math.min(t, END));
-      if(t < END){ raf = requestAnimationFrame(frame); return; }
-      raf = null;
-      box.classList.remove('running'); box.classList.add('finished');
-      again.disabled = false;
-    })(performance.now());
+  /* runs on a loop while it is on screen: the run, a pause on the finished
+     state, then again. Off screen it stops, so it costs nothing there. */
+  var HOLD = 2.6, LOOP = END + HOLD, raf = null, t0 = null, t0Off = 0;
+  function frame(now){
+    if(t0 === null) t0 = now - t0Off * 1000;
+    var t = ((now - t0) / 1000) % LOOP;
+    render(Math.min(t, END));
+    box.classList.toggle('running', t < END);
+    box.classList.toggle('finished', t >= END);
+    raf = requestAnimationFrame(frame);
+  }
+  function start(){ if(!raf){ t0 = null; raf = requestAnimationFrame(frame); } }
+  function stop(){
+    if(raf){ cancelAnimationFrame(raf); raf = null; }
+    t0Off = 0;                              /* back in view: start from the top */
   }
 
   render(0);
   if('IntersectionObserver' in window){
-    var seen = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ if(e.isIntersecting){ seen.disconnect(); play(); } });
-    }, { threshold: 0.45 });
-    seen.observe(box);
-  } else { play(); }
-  again.addEventListener('click', play);
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting) start(); else stop(); });
+    }, { threshold: 0.3 }).observe(box);
+  } else { start(); }
 })();
 
 /* ---- Automation247: let the page read itself ---- */
