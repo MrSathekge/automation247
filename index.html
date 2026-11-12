@@ -11,6 +11,7 @@
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Automation247">
 <meta property="og:locale" content="en_ZA">
@@ -1981,6 +1982,17 @@ div.it-po-h{font:500 10.5px var(--it-mono);letter-spacing:1px;text-transform:upp
   }
 
   btn.addEventListener('click', function(){ used = true; play(); });
+})();
+
+/* ---- Automation247: installable site (PWA). The service worker only runs on the
+   real https site (and localhost for testing) - not in file previews. ---- */
+(function(){
+  if(!('serviceWorker' in navigator)) return;
+  var ok = location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  if(!ok) return;
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('/sw.js').catch(function(){});
+  });
 })();
 
 /* ---- Automation247: partner-offers tracker (month-end projection) ---- */
