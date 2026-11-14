@@ -2004,11 +2004,11 @@ div.it-po-h{font:500 10.5px var(--it-mono);letter-spacing:1px;text-transform:upp
                6.7,6.6,6.9,7.2,8.2,9.2,8.5,6.8,6.9,7.1,7.3,9.4,9.8,8.9,7.6].map(function(x){ return Math.round(x * 1000); });
   var DAYS = 30, TARGET = 210000, NUDGE = 10, MEMBERS = 1240, FIRST = 7, OKAT = 0.95;
   var PARTNERS = [                         /* name, offer, share of sales, own target */
-    ['Bean & Brew',        '2-for-1 flat white',     .25, 50000],
-    ['Greenleaf Grocer',   '10% off a basket',       .34, 70000],
-    ['Pulse Cycle Studio', 'first class free',       .15, 30000],
-    ['TreadRight Tyres',   'free wheel alignment',   .16, 35000],
-    ['Page Turner Books',  'R50 off R300',           .10, 25000]
+    ['XYZA Coffee',        '2-for-1 flat white',     .25, 50000],
+    ['XYZA Grocer',        '10% off a basket',       .34, 70000],
+    ['XYZA Cycling',       'first class free',       .15, 30000],
+    ['XYZA Tyres',         'free wheel alignment',   .16, 35000],
+    ['XYZA Books',         'R50 off R300',           .10, 25000]
   ];
   var cum = [0]; DAILY.forEach(function(v, i){ cum.push(cum[i] + v); });
   function proj(d){                        /* so far + last seven days' pace x days left */
